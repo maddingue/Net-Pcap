@@ -1,0 +1,102 @@
+NAME
+
+    Net-Pcap - Interface to pcap(3) LBL packet capture library
+
+
+DESCRIPTION
+
+    The Net::Pcap module is a Perl binding to the LBL pcap(3) packet 
+    capture library.
+
+    The latest source code for the Pcap library can be found at 
+    <http://www.tcpdump.org/>.  The source code and binary for the 
+    Win32 port can be found at <http://www.winpcap.org/>.
+
+
+INSTALLATION
+
+    If your pcap header files are installed somewhere strange, create 
+    the Makefile using the INC and/or LIBS option.
+
+        $ perl Makefile.PL INC=-I/usr/local/include/pcap \
+            LIBS='-L/usr/lib/pcap -lpcap'
+
+    Then compile the extension as per usual:
+
+        $ make
+        $ make test
+        $ make install
+
+    To install the extension in a private directory, you can use the
+    PREFIX option when creating Makefile.PL.
+
+    An ANSI-compliant compiler is required to compile the extension. 
+    For most of the tests, an administrative account is required 
+    since opening a network interface in promiscuous mode is a 
+    privileged operation.  Some tests also require a working network 
+    interface with traffic on it otherwise the tests will appear to 
+    hang.  You can generate traffic by pinging a non existing IP 
+    address on your network segment.  Consult the source for individual 
+    tests for more information.
+
+    Net::Pcap is compatible with all the versions of the Pcap library, 
+    including the old BSD ones and the Windows port WinPcap.
+
+    Net::Pcap should work on any Perl since 5.004_05. This module has 
+    been tested by the author on the following Perl and system versions
+    but is likely to run on many more:
+
+      Perl    Architecture                            GCC     Pcap
+      -------------------------------------------------------------
+      5.4.5   i686-linux                              3.4.1   0.8.3
+      5.5.3   i686-linux                              3.4.1   0.8.3
+      5.6.2   i686-linux                              3.4.1   0.8.3
+      5.8.5   i386-linux-thread-multi                 3.4.1   0.8.3
+      5.8.8   i486-linux-gnu-thread-multi             4.0.4   0.9.4
+      5.8.7   x86_64-linux                            4.0.1   0.9.1
+      5.8.8   i386-freebsd-64int                      3.4.4   0.9.1
+      5.8.6   darwin-thread-multi-2level (PowerPC)    4.0.1
+
+    For Perl 5.004, you may need to install ExtUtils::Constant with 
+    this patch: 
+        http://public.activestate.com/cgi-bin/perlbrowse?patch=25927
+
+    See also the corresponding CPAN Testers page: 
+        http://testers.cpan.org/show/Net-Pcap.html
+
+
+HISTORY
+
+    The original version of Net::Pcap, version 0.01, was written by 
+    Peter Lister <p.lister@cranfield.ac.uk> using SWIG.
+
+    Version 0.02 was created by Bo Adler <thumper@alumni.caltech.edu> 
+    with a few bugfixes but not uploaded to CPAN.  It can be found at:
+        http://www.buttsoft.com/~thumper/software/perl/Net-Pcap/
+
+    Versions 0.03 and 0.04 were created by Tim Potter (TIMPOTTER) who 
+    entirely rewrote Net::Pcap using XS and wrote the documentation, 
+    with the help of David N. Blank-Edelman <dnb@ccs.neu.edu> for 
+    testing and general polishing.
+
+    Version 0.05 was released by Marco Carnut (KCARNUT) with fixes 
+    to make it work with Cygwin and WinPcap. 
+
+    Version 0.04.02 was independantly created by Jean-Louis Morel 
+    (JLMOREL) but not uploaded on the CPAN. It can be found here: 
+        http://www.bribes.org/perl/wnetpcap.html
+    Based on Tim Potter's version 0.04, it included fixes for WinPcap
+    and added wrappers for several new libpcap functions as well as 
+    WinPcap specific functions. 
+
+
+COPYRIGHT AND LICENCE
+
+    Copyright (C) 2005 Sébastien Aperghis-Tramoni. All rights reserved.
+    Copyright (c) 2003 Marco Carnut. All rights reserved. 
+    Copyright (c) 1999-2000 Tim Potter. All rights reserved. 
+    Copyright (c) 1998 Bo Adler. All rights reserved. 
+    Copyright (c) 1997 Peter Lister. All rights reserved. 
+
+    This library is free software; you can redistribute it and/or modify
+    it under the same terms as Perl itself.
