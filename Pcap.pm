@@ -4,7 +4,7 @@
 # An interface to the LBL pcap(3) library.  This module simply
 # bootstraps the extensions defined in Pcap.xs
 #
-# Copyright (C) 2005, 2006 Sebastien Aperghis-Tramoni. All rights reserved.
+# Copyright (C) 2005, 2006, 2007 Sebastien Aperghis-Tramoni. All rights reserved.
 # Copyright (C) 2003 Marco Carnut. All rights reserved. 
 # Copyright (C) 1999-2000 Tim Potter. All rights reserved. 
 # Copyright (C) 1998 Bo Adler. All rights reserved. 
@@ -335,7 +335,11 @@ B<Example>
         print "$dev : $devinfo{$dev}\n"
     }
 
-B<Note:> For backward compatibility reasons, this function can also 
+=over
+
+=item B<Note> 
+
+For backward compatibility reasons, this function can also 
 be called using the following signatures: 
 
     @devs = Net::Pcap::findalldevs(\$err);
@@ -349,6 +353,8 @@ ActivePerl port of C<Net::Pcap>, in versions 0.04.01 and 0.04.02.
 
 The new syntax has been introduced for consistency with the rest of the Perl 
 API and the C API of C<libpcap(3)>, where C<$err> is always the last argument. 
+
+=back
 
 
 =item B<lookupnet($dev, \$net, \$mask, \$err)>
@@ -801,7 +807,7 @@ C<Net::Pcap::open_live()>.
 
 =item B<get_selectable_fd($pcap)>
 
-=item B<Net::Pcap::get_selectable_fdfileno($pcap)>
+=item B<Net::Pcap::get_selectable_fd($pcap)>
 
 Returns, on Unix, a file descriptor number for a file descriptor on which 
 one can do a C<select()> or C<poll()> to wait for it to be possible to read 
@@ -1266,9 +1272,9 @@ To the beta-testers: Jean-Louis Morel, Max Maischen, Philippe Bruhat,
 David Morel, Scott Lanning, Rafael Garcia-Suarez, Karl Y. Pradene.
 
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
-Copyright (C) 2005, 2006 SE<eacute>bastien Aperghis-Tramoni. All rights reserved. 
+Copyright (C) 2005, 2006, 2007 SE<eacute>bastien Aperghis-Tramoni. All rights reserved. 
 
 Copyright (C) 2003 Marco Carnut. All rights reserved. 
 
