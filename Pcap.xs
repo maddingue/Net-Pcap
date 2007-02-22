@@ -3,7 +3,7 @@
  *
  * XS wrapper for LBL pcap(3) library.
  *
- * Copyright (C) 2005, 2006 Sebastien Aperghis-Tramoni with code by 
+ * Copyright (C) 2005, 2006, 2007 Sebastien Aperghis-Tramoni with code by 
  *      Jean-Louis Morel. All rights reserved.
  * Copyright (C) 2003 Marco Carnut. All rights reserved. 
  * Copyright (C) 1999 Tim Potter. All rights reserved. 
@@ -472,7 +472,6 @@ pcap_next_ex(p, pkt_header, pkt_data)
     CODE:
         /* Check if pkt_header is a hashref and pkt_data a scalarref */
         if (SvROK(pkt_header) && (SvTYPE(SvRV(pkt_header)) == SVt_PVHV) && SvROK(pkt_data)) {
-
 			struct pcap_pkthdr *header;
 			const u_char *data;
 			U32 SAVE_signals;
@@ -493,7 +492,7 @@ pcap_next_ex(p, pkt_header, pkt_data)
                 hv_store(hv, "caplen",  strlen("caplen"),  newSVuv(header->caplen),     0);
                 hv_store(hv, "len",     strlen("len"),     newSVuv(header->len),        0);	
 
-				pkt_data = newSVpv(data, header->caplen);
+                sv_setpvn((SV *)SvRV(pkt_data), data, header->caplen);
             }
 
         } else {
