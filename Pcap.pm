@@ -69,12 +69,12 @@ use Carp;
             lookupdev  findalldevs  lookupnet
             open_live  open_dead  open_offline  pcap_open  pcap_close
             dump_open  pcap_dump  dump_close  dump_file  dump_flush
-            compile  compile_nopcap  set_filter  freecode
-            dispatch  pcap_next  next_ex  loop  breakloop
+            compile  compile_nopcap  setfilter  freecode
+            dispatch  pcap_next  next_ex  pcap_next_ex  loop  breakloop
             datalink  set_datalink  datalink_name_to_val  
             datalink_val_to_name  datalink_val_to_description
             snapshot  pcap_file  pcap_fileno  get_selectable_fd
-            is_swapped  major_version  minor_version
+            stats  is_swapped  major_version  minor_version
             geterr strerror perror
             lib_version
             createsrcstr  parsesrcstr
@@ -133,6 +133,7 @@ sub AUTOLOAD {
 *Net::Pcap::pcap_open   = \&Net::Pcap::open;
 *Net::Pcap::pcap_close  = \&Net::Pcap::close;
 *Net::Pcap::pcap_next   = \&Net::Pcap::next;
+*Net::Pcap::pcap_next_ex= \&Net::Pcap::next_ex;
 *Net::Pcap::pcap_dump   = \&Net::Pcap::dump;
 *Net::Pcap::pcap_file   = \&Net::Pcap::file;
 *Net::Pcap::pcap_fileno = \&Net::Pcap::fileno;
@@ -516,7 +517,7 @@ packet header.  If not packet is available, the return value and
 header is undefined.
 
 
-=item B<pcap_next_ex($pcap, \%header, \$packet)>
+=item B<next_ex($pcap, \%header, \$packet)>
 
 =item B<Net::Pcap::next_ex($pcap, \%header, \$packet)>
 
