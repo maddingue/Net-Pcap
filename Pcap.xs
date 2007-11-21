@@ -100,7 +100,7 @@ pcap_lookupdev(err)
 			SV *err_sv = SvRV(err);
 
 			RETVAL = pcap_lookupdev(errbuf);
-#ifdef _WPCAP
+#ifdef WPCAP
 			{
 				int length = lstrlenW((PWSTR)RETVAL) + 2;
 				char *r = safemalloc(length);  /* Conversion from Unicode to ANSI */
@@ -108,7 +108,7 @@ pcap_lookupdev(err)
 				lstrcpyA(RETVAL, r);
 				safefree(r);
 			}
-#endif
+#endif /* WPCAP */
 			if (RETVAL == NULL) {
 				sv_setpv(err_sv, errbuf);
 			} else {
