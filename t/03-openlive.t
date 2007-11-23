@@ -67,7 +67,7 @@ if($^O eq 'MSWin32' or $^O eq 'cygwin') {
 } elsif($^O eq 'darwin' or $^O eq 'freebsd' or $^O eq 'openbsd') {
     like( $err, "/^(?:BIOCSETIF: )?$fakedev: Device not configured/", " - \$err must be set: $err" );
 } else {
-    like( $err, '/^(?:bind|ioctl): (?:No such device)/', " - \$err must be set: $err" );
+    like( $err, '/^(?:bind|ioctl|SIOCGIFHWADDR): (?:No such device)/', " - \$err must be set: $err" );
 }
 is( $pcap, undef, " - \$pcap isn't defined" );
 $err = '';
