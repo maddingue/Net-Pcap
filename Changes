@@ -1,5 +1,9 @@
 The (quite complex) revision history for Net-Pcap
 
+2007.11.xx - 0.15 - Sebastien Aperghis-Tramoni (SAPER)
+  - [BUGFIX] CPAN-RT#30745: Fix WinPcap support.
+  - [TESTS] CPAN-RT#30903: Fix t/03-openlive.t failure on Linux.
+
 2006.09.11 - 0.15_01 - Sebastien Aperghis-Tramoni (SAPER)
   - [DIST] Rewrote the functions detection code using DynaLoader.
   - [TESTS] Fixed small typo in warning message from t/podcover.t. Thanks
