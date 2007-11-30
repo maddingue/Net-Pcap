@@ -60,10 +60,10 @@ void callback_wrapper(u_char *user, const struct pcap_pkthdr *h, const u_char *p
 
     dSP;
 
-    hv_store(hdr, "tv_sec", strlen("tv_sec"), newSViv(h->ts.tv_sec), 0);
+    hv_store(hdr, "tv_sec",  strlen("tv_sec"),  newSViv(h->ts.tv_sec),  0);
     hv_store(hdr, "tv_usec", strlen("tv_usec"), newSViv(h->ts.tv_usec), 0);
-    hv_store(hdr, "caplen", strlen("caplen"), newSVuv(h->caplen), 0);
-    hv_store(hdr, "len", strlen("len"), newSVuv(h->len), 0);	
+    hv_store(hdr, "caplen",  strlen("caplen"),  newSVuv(h->caplen),     0);
+    hv_store(hdr, "len",     strlen("len"),     newSVuv(h->len),        0);	
 
     PUSHMARK(sp);
     XPUSHs((SV*)user);
@@ -972,7 +972,7 @@ pcap_sendqueue_alloc(memsize)
     u_int memsize
 
 
-MODULE = Net::Pcap PACKAGE = pcap_send_queuePtr
+MODULE = Net::Pcap      PACKAGE = pcap_send_queuePtr
 
 void
 DESTROY(queue)
