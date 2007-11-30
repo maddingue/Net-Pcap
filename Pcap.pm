@@ -16,7 +16,6 @@
 package Net::Pcap;
 use strict;
 require Exporter;
-use AutoLoader;
 use Carp;
 
 {   no strict;
