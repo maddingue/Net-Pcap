@@ -21,7 +21,7 @@ use Carp;
 {   no strict;
     $VERSION = '0.15_02';
 
-    @ISA = qw(Exporter DynaLoader);
+    @ISA = qw(Exporter);
 
     %EXPORT_TAGS = (
         'bpf' => [qw(
