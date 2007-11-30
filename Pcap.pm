@@ -18,7 +18,8 @@ use strict;
 require Exporter;
 use Carp;
 
-{   no strict;
+{
+    no strict "vars";
     $VERSION = '0.15_02';
 
     @ISA = qw(Exporter);
@@ -109,14 +110,14 @@ sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
     # XS function.
 
-    no strict;
+    no strict "vars";
     my $constname;
     ($constname = $AUTOLOAD) =~ s/.*:://;
     croak "Net::Pcap::constant() not defined" if $constname eq 'constant';
     my ($error, $val) = constant($constname);
     if ($error) { croak $error; }
 
-    {   no strict 'refs';
+    {   no strict "refs";
 	# Fixed between 5.005_53 and 5.005_61
 #XXX    if ($] >= 5.00561) {
 #XXX        *$AUTOLOAD = sub () { $val };
