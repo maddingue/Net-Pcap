@@ -6,7 +6,7 @@
 #
 # Copyright (C) 2005, 2006, 2007 Sebastien Aperghis-Tramoni. All rights reserved.
 # Copyright (C) 2003 Marco Carnut. All rights reserved. 
-# Copyright (C) 1999-2000 Tim Potter. All rights reserved. 
+# Copyright (C) 1999, 2000 Tim Potter. All rights reserved. 
 # Copyright (C) 1998 Bo Adler. All rights reserved. 
 # Copyright (C) 1997 Peter Lister. All rights reserved. 
 # 
@@ -1279,7 +1279,7 @@ Copyright (C) 2005, 2006, 2007 SE<eacute>bastien Aperghis-Tramoni. All rights re
 
 Copyright (C) 2003 Marco Carnut. All rights reserved. 
 
-Copyright (C) 1999-2000 Tim Potter. All rights reserved. 
+Copyright (C) 1999, 2000 Tim Potter. All rights reserved. 
 
 Copyright (C) 1998 Bo Adler. All rights reserved. 
 
