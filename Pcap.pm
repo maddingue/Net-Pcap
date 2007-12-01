@@ -20,7 +20,7 @@ use Carp;
 
 {
     no strict "vars";
-    $VERSION = '0.15_02';
+    $VERSION = '0.15';
 
     @ISA = qw(Exporter);
 
@@ -105,6 +105,7 @@ use Carp;
         bootstrap Net::Pcap $VERSION;
     };
 }
+
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
