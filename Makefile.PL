@@ -111,19 +111,20 @@ close(FUNCS);
 
 
 WriteMakefile(
-    'NAME'             => 'Net::Pcap',
-    'AUTHOR'           => 'Sébastien Aperghis-Tramoni <sebastien@aperghis.net>',
-    'DISTNAME'         => 'Net-Pcap',
-    'VERSION_FROM'     => 'Pcap.pm',
-    'ABSTRACT_FROM'    => 'Pcap.pm',
-    'PL_FILES'         => {}, 
-    'EXE_FILES'        => [ 'bin/pcapinfo' ], 
-    'PREREQ_PM'        => {
+    NAME            => 'Net::Pcap',
+    LICENSE         => 'perl',
+    AUTHOR          => 'Sebastien Aperghis-Tramoni <sebastien@aperghis.net>',
+    DISTNAME        => 'Net-Pcap',
+    VERSION_FROM    => 'Pcap.pm',
+    ABSTRACT_FROM   => 'Pcap.pm',
+    PL_FILES        => {}, 
+    EXE_FILES       => [ 'bin/pcapinfo' ], 
+    PREREQ_PM       => {
         'IO::Interface' => '0', # needed for pcapinfo(1)
-        'Test::More' => '0.45', 
+        'Test::More'    => '0.45', 
     },
-    dist => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" }, 
-    clean => { FILES => 'Net-Pcap-* macros.all' }, 
+    dist        => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" }, 
+    clean       => { FILES => 'Net-Pcap-* macros.all' }, 
     %options,        # appropriate CCFLAFS, LDFLAGS and Define's
 );
 
