@@ -18,6 +18,35 @@ use strict;
 require Exporter;
 use Carp;
 
+
+# functions names
+my @func_short_names = qw(
+    lookupdev  findalldevs  lookupnet
+    open_live  open_dead  open_offline  loop  breakloop  close  dispatch
+    next  next_ex  compile  compile_nopcap  setfilter  freecode
+    setnonblock  getnonblock
+    dump_open  dump  dump_file  dump_flush  dump_close
+    datalink  set_datalink  datalink_name_to_val  datalink_val_to_name
+    datalink_val_to_description
+    snapshot  is_swapped  major_version  minor_version  stats
+    file  fileno  get_selectable_fd  geterr  strerror  perror
+    lib_version  createsrcstr  parsesrcstr  open  setbuff  setbuff
+    setmode  setmintocopy  getevent  sendpacket
+    sendqueue_alloc  sendqueue_queue  sendqueue_transmit
+);
+
+my @func_long_names = map { "pcap_$_" } @func_short_names;
+
+
+# functions aliases
+{
+    no strict "refs";
+    for my $func (@func_short_names) {
+        *{ __PACKAGE__ . "::pcap_$func" } = \&{ __PACKAGE__ . $func }
+    }
+}
+
+
 {
     no strict "vars";
     $VERSION = '0.15';
@@ -31,19 +60,21 @@ use Carp;
         )], 
         'datalink' => [qw(
             DLT_AIRONET_HEADER  DLT_APPLE_IP_OVER_IEEE1394  DLT_ARCNET
-            DLT_ARCNET_LINUX  DLT_ATM_CLIP  DLT_ATM_RFC1483  DLT_AURORA  DLT_AX25
-            DLT_CHAOS  DLT_CHDLC  DLT_CISCO_IOS  DLT_C_HDLC  DLT_DOCSIS  DLT_ECONET
-            DLT_EN10MB  DLT_EN3MB  DLT_ENC  DLT_FDDI  DLT_FRELAY  DLT_HHDLC
-            DLT_IBM_SN  DLT_IBM_SP  DLT_IEEE802  DLT_IEEE802_11  DLT_IEEE802_11_RADIO
-            DLT_IEEE802_11_RADIO_AVS  DLT_IPFILTER  DLT_IP_OVER_FC  DLT_JUNIPER_ATM1
-            DLT_JUNIPER_ATM2  DLT_JUNIPER_ES  DLT_JUNIPER_GGSN  DLT_JUNIPER_MFR
-            DLT_JUNIPER_MLFR  DLT_JUNIPER_MLPPP  DLT_JUNIPER_MONITOR  DLT_JUNIPER_SERVICES
-            DLT_LINUX_IRDA  DLT_LINUX_SLL  DLT_LOOP  DLT_LTALK  DLT_NULL  DLT_OLD_PFLOG
-            DLT_PCI_EXP  DLT_PFLOG  DLT_PFSYNC  DLT_PPP  DLT_PPP_BSDOS  DLT_PPP_ETHER
-            DLT_PPP_SERIAL  DLT_PRISM_HEADER  DLT_PRONET  DLT_RAW  DLT_RIO  DLT_SLIP
-            DLT_SLIP_BSDOS  DLT_SUNATM  DLT_SYMANTEC_FIREWALL  DLT_TZSP  DLT_USER0
-            DLT_USER1  DLT_USER2  DLT_USER3  DLT_USER4  DLT_USER5  DLT_USER6  DLT_USER7
-            DLT_USER8  DLT_USER9  DLT_USER10  DLT_USER11  DLT_USER12  DLT_USER13
+            DLT_ARCNET_LINUX  DLT_ATM_CLIP  DLT_ATM_RFC1483  DLT_AURORA
+            DLT_AX25  DLT_CHAOS  DLT_CHDLC  DLT_CISCO_IOS  DLT_C_HDLC
+            DLT_DOCSIS  DLT_ECONET  DLT_EN10MB  DLT_EN3MB  DLT_ENC  DLT_FDDI
+            DLT_FRELAY  DLT_HHDLC  DLT_IBM_SN  DLT_IBM_SP  DLT_IEEE802
+            DLT_IEEE802_11  DLT_IEEE802_11_RADIO  DLT_IEEE802_11_RADIO_AVS
+            DLT_IPFILTER  DLT_IP_OVER_FC  DLT_JUNIPER_ATM1  DLT_JUNIPER_ATM2
+            DLT_JUNIPER_ES  DLT_JUNIPER_GGSN  DLT_JUNIPER_MFR  DLT_JUNIPER_MLFR
+            DLT_JUNIPER_MLPPP  DLT_JUNIPER_MONITOR  DLT_JUNIPER_SERVICES
+            DLT_LINUX_IRDA  DLT_LINUX_SLL  DLT_LOOP  DLT_LTALK  DLT_NULL
+            DLT_OLD_PFLOG  DLT_PCI_EXP  DLT_PFLOG  DLT_PFSYNC  DLT_PPP
+            DLT_PPP_BSDOS  DLT_PPP_ETHER  DLT_PPP_SERIAL  DLT_PRISM_HEADER
+            DLT_PRONET  DLT_RAW  DLT_RIO  DLT_SLIP  DLT_SLIP_BSDOS  DLT_SUNATM
+            DLT_SYMANTEC_FIREWALL  DLT_TZSP  DLT_USER0  DLT_USER1  DLT_USER2
+            DLT_USER3  DLT_USER4  DLT_USER5  DLT_USER6  DLT_USER7  DLT_USER8
+            DLT_USER9  DLT_USER10  DLT_USER11  DLT_USER12  DLT_USER13
             DLT_USER14  DLT_USER15
         )], 
         mode => [qw(
@@ -67,20 +98,19 @@ use Carp;
         )],
         functions => [qw(
             lookupdev  findalldevs  lookupnet
-            open_live  open_dead  open_offline  pcap_open  pcap_close
-            dump_open  pcap_dump  dump_close  dump_file  dump_flush
+            open_live  open_dead  open_offline
+            dump_open  dump_close  dump_file  dump_flush
             compile  compile_nopcap  setfilter  freecode
-            dispatch  pcap_next  next_ex  pcap_next_ex  loop  breakloop
+            dispatch  next_ex  loop  breakloop
             datalink  set_datalink  datalink_name_to_val  
             datalink_val_to_name  datalink_val_to_description
-            snapshot  pcap_file  pcap_fileno  get_selectable_fd
+            snapshot  get_selectable_fd
             stats  is_swapped  major_version  minor_version
-            geterr strerror perror
-            lib_version
+            geterr  strerror  perror  lib_version
             createsrcstr  parsesrcstr
             setbuff  setuserbuffer  setmode  setmintocopy  getevent  sendpacket
             sendqueue_alloc  sendqueue_queue  sendqueue_transmit
-        )], 
+        ), @func_long_names ], 
     );
 
     @EXPORT = (
@@ -130,35 +160,26 @@ sub AUTOLOAD {
 }
 
 
-# Functions aliases
-*Net::Pcap::pcap_open   = \&Net::Pcap::open;
-*Net::Pcap::pcap_close  = \&Net::Pcap::close;
-*Net::Pcap::pcap_next   = \&Net::Pcap::next;
-*Net::Pcap::pcap_next_ex= \&Net::Pcap::next_ex;
-*Net::Pcap::pcap_dump   = \&Net::Pcap::dump;
-*Net::Pcap::pcap_file   = \&Net::Pcap::file;
-*Net::Pcap::pcap_fileno = \&Net::Pcap::fileno;
-
-
 # Perl wrapper for DWIM
 sub findalldevs {
-    croak "Usage: Net::Pcap::findalldevs(devinfo, err)" unless @_ and @_ <= 2 and ref $_[0];
-    
+    croak "Usage: Net::Pcap::findalldevs(devinfo, err)"
+        unless @_ and @_ <= 2 and ref $_[0];
+
     # findalldevs(\$err), legacy from Marco Carnut 0.05
     my %devinfo = ();
-    ( ref $_[0] eq 'SCALAR' and return Net::Pcap::findalldevs_xs(\%devinfo, $_[0]) ) 
+    ( ref $_[0] eq 'SCALAR' and return findalldevs_xs(\%devinfo, $_[0]) ) 
         or croak "arg1 not a scalar ref"
         if @_ == 1;
-    
+
     # findalldevs(\$err, \%devinfo), legacy from Jean-Louis Morel 0.04.02
     ref $_[0] eq 'SCALAR' and (
-        ( ref $_[1] eq 'HASH' and return Net::Pcap::findalldevs_xs($_[1], $_[0]) )
+        ( ref $_[1] eq 'HASH' and return findalldevs_xs($_[1], $_[0]) )
         or croak "arg2 not a hash ref"
     );
 
     # findalldevs(\%devinfo, \$err), new, correct syntax, consistent with libpcap(3)
     ref $_[0] eq 'HASH' and (
-        ( ref $_[1] eq 'SCALAR' and return Net::Pcap::findalldevs_xs($_[0], $_[1]) )
+        ( ref $_[1] eq 'SCALAR' and return findalldevs_xs($_[0], $_[1]) )
             or croak "arg2 not a scalar ref"
     );
 
@@ -284,8 +305,10 @@ C<:rpcap> exports the following constants:
 
 =item *
 
-C<:functions> exports the function names, so that you can write C<lookupdev()> 
-instead of C<Net::Pcap::lookupdev()> for example. As some functions would have 
+C<:functions> exports the function names with the same names as the C library, 
+so you can write C<pcap_lookupdev()> instead of C<Net::Pcap::lookupdev()> 
+for example. This should 
+As some functions would have 
 the same name as existing Perl functions, they have been prefixed by C<pcap_>. 
 This is the case for C<open()>, C<close()>, C<next()>, C<dump()>, C<file()>, 
 C<fileno()>. 
@@ -773,6 +796,10 @@ currently open savefile.
 Returns a hash containing information about the status of packet
 capture device C<$pcap>.  The hash contains the following fields.
 
+This function is supported only on live captures, not on savefiles; 
+no statistics are stored in savefiles, so no statistics are available 
+when reading from a savefile.
+
 =over 4
 
 =item *
@@ -878,14 +905,14 @@ Accepts a set of strings (host name, port, ...), and stores the complete
 source string according to the new format (e.g. C<"rpcap://1.2.3.4/eth0">) 
 in C<$source>.
 
-This function is provided in order to help the user creating the source string 
-according to the new format. An unique source string is used in order to make 
-easy for old applications to use the remote facilities. Think about B<tcpdump(1)>, 
-for example, which has only one way to specify the interface on which the capture 
-has to be started. However, GUI-based programs can find more useful to specify 
-hostname, port and interface name separately. In that case, they can use this 
-function to create the source string before passing it to the C<pcap_open()> 
-function.
+This function is provided in order to help the user creating the source 
+string according to the new format. An unique source string is used in 
+order to make easy for old applications to use the remote facilities. 
+Think about B<tcpdump(1)>, for example, which has only one way to specify 
+the interface on which the capture has to be started. However, GUI-based 
+programs can find more useful to specify hostname, port and interface name 
+separately. In that case, they can use this function to create the source 
+string before passing it to the C<pcap_open()> function.
 
 Returns 0 if everything is fine, -1 if some errors occurred. The string 
 containing the complete source is returned in the C<$source> variable.
@@ -941,9 +968,9 @@ call.
 
 This function hides the differences between the different C<pcap_open_xxx()> 
 functions so that the programmer does not have to manage different opening 
-function. In this way, the I<true> C<open()> function is decided according to the 
-source type, which is included into the source string (in the form of source 
-prefix).
+function. In this way, the I<true> C<open()> function is decided according 
+to the source type, which is included into the source string (in the form of 
+source prefix).
 
 Returns a pointer to a pcap descriptor which can be used as a parameter to 
 the following calls (C<compile()> and so on) and that specifies an opened 
@@ -1276,7 +1303,8 @@ David Morel, Scott Lanning, Rafael Garcia-Suarez, Karl Y. Pradene.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright (C) 2005, 2006, 2007 SE<eacute>bastien Aperghis-Tramoni. All rights reserved. 
+Copyright (C) 2005, 2006, 2007 SE<eacute>bastien Aperghis-Tramoni.
+All rights reserved. 
 
 Copyright (C) 2003 Marco Carnut. All rights reserved. 
 
