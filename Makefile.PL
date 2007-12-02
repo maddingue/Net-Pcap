@@ -555,8 +555,8 @@ sub find_functions {
     # search for the functions list in the documentation
     open(PM, '<Pcap.pm') or die "fatal: can't read 'Pcap.pm': $!\n";
     while (my $line = <PM>) {
-        next unless $line =~ /^=item +B<Net::Pcap::(\w+)\(.*\)>$/;
-        push @funcs, "pcap_$1" unless $old_func{"pcap_$1"};
+        next unless $line =~ /^=item +B<(pcap_\w+)\(.*\)>$/;
+        push @funcs, $1 unless $old_func{$1};
     }
 
     close(PM);
