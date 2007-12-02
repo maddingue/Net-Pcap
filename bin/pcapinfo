@@ -1,12 +1,11 @@
 #!/usr/bin/perl
 use strict;
-use IO::Socket;
-use IO::Interface ':flags';
 use Net::Pcap ':functions';
 use Sys::Hostname;
 
-my(%devs,$err) = ();
-my $s = IO::Socket::INET->new(Proto => 'udp');
+my $has_io_interface = eval "use IO::Interface::Simple ':flags'; 1" || 0;
+
+my(%devs, $err) = ();
 my @devs = findalldevs(\%devs, \$err);
 
 my $hostname = hostname();
@@ -25,51 +24,64 @@ for my $dev (@devs) {
     my $default = $dev eq lookupdev(\$err) ? "(default)" : '';
 
     print "Device $dev $default\n", 
-          "  Description       : $devs{$dev}\n"; 
-    print "  Link type         : ", linktype($dev), $/, 
-          "  Hardware address  : ", $s->if_hwaddr($dev), $/, 
-          "  Network address   : ", $s->if_addr($dev), $/, 
-          "  Network mask      : ", $s->if_netmask($dev), $/,
-          "  Flags             : ", flags($dev), $/, 
-          if $dev ne 'any';
+          "  Description       : $devs{$dev}\n";
+
+    print "  Link type         : ", linktype($dev), $/
+        if $dev ne "any";
+
+    if ($has_io_interface) {
+        my $iface = IO::Interface::Simple->new($dev);
+
+        if (defined $iface) {
+            print "  Hardware address  : ", $iface->hwaddr,  $/ if $iface->hwaddr;
+            print "  Network address   : ", $iface->address, $/ if $iface->address;
+            print "  Network mask      : ", $iface->netmask, $/ if $iface->netmask;
+            print "  Flags             : ", flags($iface),   $/;
+        }
+    }
+
     print $/;
 }
 
-sub linktype {
-    my $dev = shift;
-    my $linktype = "<can't get this information>";
 
-    if(my $pcap = open_live($dev, 1024, 1, 0, \$err)) {
+sub linktype {
+    my ($dev) = @_;
+    my $linktype = "<can't get this information>";
+    my $status = "";
+
+    if (my $pcap = open_live($dev, 1024, 1, 0, \$err)) {
         $linktype = datalink_val_to_description(datalink($pcap));
         pcap_close($pcap);
     }
 
-    chomp(my $status = `/sbin/mii-tool $dev 2>/dev/null`);
-    $status =~ s/$dev\:/,/;
+    if (-e "/sbin/mii-tool") {
+        chomp($status = `/sbin/mii-tool $dev 2>/dev/null`);
+        $status =~ s/$dev\:/,/;
+    }
 
     return $linktype . $status
 }
 
+
 sub flags {
-    my $dev = shift;
-    my $flags = $s->if_flags($dev);
+    my ($iface) = @_;
     my $string = '';
 
-    $string .= "up "          if $flags & IFF_UP;
-    $string .= "running "     if $flags & IFF_RUNNING;
-    $string .= "broadcast "   if $flags & IFF_BROADCAST;
-    $string .= "debug "       if $flags & IFF_DEBUG;
-    $string .= "loopback "    if $flags & IFF_LOOPBACK;
-    $string .= "p-to-p "      if $flags & IFF_POINTOPOINT;
-    $string .= "notrailers "  if $flags & IFF_NOTRAILERS;
-    $string .= "noarp "       if $flags & IFF_NOARP;
-    $string .= "promiscuous " if $flags & IFF_PROMISC;
-    $string .= "multicast "   if $flags & IFF_MULTICAST;
-    $string .= "allmulti "    if $flags & IFF_ALLMULTI;
-    $string .= "master "      if $flags & IFF_MASTER;
-    $string .= "slave "       if $flags & IFF_SLAVE;
-    $string .= "portsel "     if $flags & IFF_PORTSEL;
-    $string .= "automedia "   if $flags & IFF_AUTOMEDIA;
+    $string .= "up "          if $iface->flags & &IO::Interface::IFF_UP;
+    $string .= "running "     if $iface->is_running;
+    $string .= "broadcast "   if $iface->is_broadcast;
+    $string .= "debug "       if $iface->flags & &IO::Interface::IFF_DEBUG;
+    $string .= "loopback "    if $iface->is_loopback;
+    $string .= "p-to-p "      if $iface->is_pt2pt;
+    $string .= "notrailers "  if $iface->is_notrailers;
+    $string .= "noarp "       if $iface->is_noarp;
+    $string .= "promiscuous " if $iface->is_promiscuous;
+    $string .= "multicast "   if $iface->is_multicast;
+    $string .= "allmulti "    if $iface->flags & eval { &IO::Interface::IFF_ALLMULTI };
+    $string .= "master "      if $iface->flags & eval { &IO::Interface::IFF_MASTER };
+    $string .= "slave "       if $iface->flags & eval { &IO::Interface::IFF_SLAVE };
+    $string .= "portsel "     if $iface->flags & eval { &IO::Interface::IFF_PORTSEL };
+    $string .= "automedia "   if $iface->flags & eval { &IO::Interface::IFF_AUTOMEDIA };
 
     return $string
 }
@@ -120,7 +132,7 @@ and Pcap library available on the current host. Here is an example:
 The device marked as C<"(default)"> is the one returned when calling 
 C<Net::Pcap::lookupdev()>
 
-Some information like the link type can only be gathered with root 
+Some information like the link type can only be gathered with administrative 
 privileges. 
 
 =head1 AUTHOR
@@ -129,7 +141,8 @@ SE<eacute>bastien Aperghis-Tramoni, E<lt>sebastien@aperghis.netE<gt>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2005, 2006 SE<eacute>bastien Aperghis-Tramoni. All rights reserved.
+Copyright (C) 2005, 2006, 2007 SE<eacute>bastien Aperghis-Tramoni. 
+All rights reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
