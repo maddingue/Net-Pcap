@@ -4,6 +4,7 @@ The (quite complex) revision history for Net-Pcap
   - [BUGFIX] CPAN-RT#30745: Fix WinPcap support.
   - [API] Now providing "pcap_"-prefixed aliases for all functions.
     Documentation was changed to use these names instead of the old ones.
+  - [CMD] pcapinfo(1) no longer need IO::Interface.
   - [TESTS] CPAN-RT#30903: Fix t/03-openlive.t failure on Linux.
 
 2006.09.11 - 0.15_01 - Sebastien Aperghis-Tramoni (SAPER)
@@ -45,7 +46,7 @@ The (quite complex) revision history for Net-Pcap
   - [TESTS] Updated t/03-openlive.t with diagnostics for FreeBSD and OpenBSD.
 
 2005.11.28 - 0.11 - Sebastien Aperghis-Tramoni (SAPER)
-  - [CODE] Added the pcapinfo command.
+  - [CMD] Added the pcapinfo command.
   - [DIST] Cygwin installation was simplified and should now Just Work.
   - [TESTS] Improved the whole test suite to make it use the best device
     it can find (was needed for Cygwin & Win32).
