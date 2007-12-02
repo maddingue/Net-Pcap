@@ -1,7 +1,9 @@
 The (quite complex) revision history for Net-Pcap
 
-2007.11.xx - 0.15 - Sebastien Aperghis-Tramoni (SAPER)
+2007.12.02 - 0.15 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] CPAN-RT#30745: Fix WinPcap support.
+  - [API] Now providing "pcap_"-prefixed aliases for all functions.
+    Documentation was changed to use these names instead of the old ones.
   - [TESTS] CPAN-RT#30903: Fix t/03-openlive.t failure on Linux.
 
 2006.09.11 - 0.15_01 - Sebastien Aperghis-Tramoni (SAPER)

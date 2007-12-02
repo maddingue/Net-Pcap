@@ -36,17 +36,17 @@ SKIP: {
         # findalldevs() errors
         throws_ok(sub {
             Net::Pcap::findalldevs()
-        }, '/^Usage: Net::Pcap::findalldevs\(devinfo, err\)/', 
+        }, '/^Usage: pcap_findalldevs\(devinfo, err\)/', 
            "calling findalldevs() with no argument");
 
         throws_ok(sub {
             Net::Pcap::findalldevs(0, 0, 0)
-        }, '/^Usage: Net::Pcap::findalldevs\(devinfo, err\)/', 
+        }, '/^Usage: pcap_findalldevs\(devinfo, err\)/', 
            "calling findalldevs() with too many arguments");
 
         throws_ok(sub {
             Net::Pcap::findalldevs(0)
-        }, '/^Usage: Net::Pcap::findalldevs\(devinfo, err\)/', 
+        }, '/^Usage: pcap_findalldevs\(devinfo, err\)/', 
            "calling 1-arg findalldevs() with incorrect argument type");
 
         throws_ok(sub {
@@ -56,7 +56,7 @@ SKIP: {
 
         throws_ok(sub {
             Net::Pcap::findalldevs(0, 0)
-        }, '/^Usage: Net::Pcap::findalldevs\(devinfo, err\)/', 
+        }, '/^Usage: pcap_findalldevs\(devinfo, err\)/', 
            "calling 2-args findalldevs() with incorrect argument type");
 
         throws_ok(sub {
