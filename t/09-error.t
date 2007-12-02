@@ -8,7 +8,7 @@ use Utils;
 plan skip_all => "no network device available" unless find_network_device();
 plan tests => 10;
 
-my($dev,$net,$mask,$pcap,$filter,$res,$err) = ('','','','','','','');
+my($dev,$net,$mask,$pcap,$filter,$res,$err) = ('','',0,'','','','');
 
 # Find a device and open it
 $dev = find_network_device();

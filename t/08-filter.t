@@ -9,7 +9,7 @@ plan tests => 29;
 
 eval "use Test::Exception"; my $has_test_exception = !$@;
 
-my($dev,$net,$mask,$pcap,$filter,$res,$err) = ('','','','','','','');
+my($dev,$net,$mask,$pcap,$filter,$res,$err) = ('','',0,'','','','');
 
 # Find a device
 $dev = find_network_device();
