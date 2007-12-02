@@ -120,8 +120,16 @@ WriteMakefile(
     PL_FILES        => {}, 
     EXE_FILES       => [ 'bin/pcapinfo' ], 
     PREREQ_PM       => {
-        'IO::Interface' => '0', # needed for pcapinfo(1)
-        'Test::More'    => '0.45', 
+        # module prereqs
+        'Carp'          => '0',
+        'XSLoader'      => '0',
+
+        # pcapinfo prereqs
+        'Sys::Hostname' => '0',
+
+        # build/test prereqs
+        'Socket'        => '0',
+        'Test::More'    => '0.45',
     },
     dist        => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" }, 
     clean       => { FILES => 'Net-Pcap-* macros.all' }, 
