@@ -136,12 +136,13 @@ WriteMakefile(
     %options,        # appropriate CCFLAFS, LDFLAGS and Define's
 );
 
-if(eval {require ExtUtils::Constant; 1}) {
+if (eval { require ExtUtils::Constant; 1 }) {
     # If you edit these definitions to change the constants used by this module,
     # you will need to use the generated const-c.inc and const-xs.inc
     # files to replace their "fallback" counterparts before distributing your
     # changes.
-    my @names = (qw(BPF_A BPF_ABS BPF_ADD BPF_ALIGNMENT BPF_ALU BPF_AND BPF_B
+    my @names = (qw(
+        BPF_A BPF_ABS BPF_ADD BPF_ALIGNMENT BPF_ALU BPF_AND BPF_B
         BPF_DIV BPF_H BPF_IMM BPF_IND BPF_JA BPF_JEQ BPF_JGE BPF_JGT
         BPF_JMP BPF_JSET BPF_K BPF_LD BPF_LDX BPF_LEN BPF_LSH
         BPF_MAJOR_VERSION BPF_MAXBUFSIZE BPF_MAXINSNS BPF_MEM
@@ -169,7 +170,8 @@ if(eval {require ExtUtils::Constant; 1}) {
         PCAP_VERSION_MAJOR PCAP_VERSION_MINOR OPENFLAG_PROMISCUOUS 
         OPENFLAG_DATATX_UDP OPENFLAG_NOCAPTURE_RPCAP RMTAUTH_NULL RMTAUTH_PWD
         PCAP_SAMP_NOSAMP PCAP_SAMP_FIRST_AFTER_N_MS PCAP_SAMP_1_EVERY_N 
-        PCAP_SRC_FILE PCAP_SRC_IFLOCAL PCAP_SRC_IFREMOTE));
+        PCAP_SRC_FILE PCAP_SRC_IFLOCAL PCAP_SRC_IFREMOTE
+    ));
 
     ExtUtils::Constant::WriteConstants(
             NAME         => 'pcap',
@@ -182,13 +184,19 @@ if(eval {require ExtUtils::Constant; 1}) {
     open(MACROS, '>macros.all') or warn "can't write 'macros.all': $!\n";
     print MACROS join $/, @names;
     close(MACROS);
-
-} else {
-    eval 'use File::Copy';
+}
+elsif (eval "use File::Copy; 1") {
     foreach my $file ('const-c.inc', 'const-xs.inc') {
         my $fallback = File::Spec->catfile('fallback', $file);
         copy ($fallback, $file) or die "Can't copy $fallback to $file: $!";
     }
+}
+else {
+    die <<"REASON"
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Your Perl installation lacks both File::Copy and ExtUtils::Constant.\a
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REASON
 }
 
 
