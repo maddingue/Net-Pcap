@@ -73,7 +73,7 @@ my %devs = ();
 my @devs = Net::Pcap::findalldevs(\%devs, \$err);
 
 if (@devs) {
-    while($devs[0] eq 'lo' or $devs[0] eq 'lo0' or $devs[0] =~ /GenericDialupAdapter/) {
+    while ($devs[0] eq 'lo' or $devs[0] eq 'lo0' or $devs[0] =~ /GenericDialupAdapter/) {
         shift @devs
     }
 }
