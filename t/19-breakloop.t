@@ -1,4 +1,4 @@
-#!/usr/bin/perl -T
+#!perl -T
 use strict;
 use Test::More;
 use Net::Pcap;

@@ -1,4 +1,4 @@
-#!/usr/bin/perl -T
+#!perl -T
 use strict;
 use Test::More;
 plan skip_all => "Currently not working for Net::Pcap";
