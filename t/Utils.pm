@@ -72,10 +72,14 @@ my $err;
 my %devs = ();
 my @devs = Net::Pcap::findalldevs(\%devs, \$err);
 
-if (@devs) {
-    while ($devs[0] eq 'lo' or $devs[0] eq 'lo0' or $devs[0] =~ /GenericDialupAdapter/) {
-        shift @devs
-    }
+# filter out unusable devices
+@devs = grep { $_ ne "lo" and $_ ne "lo0" and $_ !~ /GenericDialupAdapter/ } @devs;
+
+# check if the user has specified a prefered device to use for tests
+if (open(PREF, "device.txt")) {
+    my $dev = <PREF>;
+    chomp $dev;
+    unshift @devs, $dev;
 }
 
 sub find_network_device {
