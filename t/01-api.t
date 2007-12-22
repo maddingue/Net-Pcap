@@ -1,8 +1,9 @@
 #!perl -T
 use strict;
 use Test::More;
-BEGIN { plan tests => 51 }
 use Net::Pcap;
+
+plan tests => 51;
 
 # check that the following functions are available
 can_ok( 'Net::Pcap', 'Net::Pcap::lookupdev' );
