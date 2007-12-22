@@ -34,7 +34,12 @@ t/17-lib_version.t
 t/18-open_dead.t
 t/19-breakloop.t
 t/20-constants.t
+t/21-next_ex.t
+t/22-open.t
+t/23-srcstr.t
+t/distchk.t
 t/podcover.t
+t/podspell.t
 t/pod.t
 t/portfs.t
 t/README
