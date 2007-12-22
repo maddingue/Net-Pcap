@@ -42,7 +42,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
 {
     no strict "refs";
     for my $func (@func_short_names) {
-        *{ __PACKAGE__ . "::pcap_$func" } = \&{ __PACKAGE__ . $func }
+        *{ __PACKAGE__ . "::pcap_$func" } = \&{ __PACKAGE__ . "::" . $func }
     }
 }
 
@@ -144,11 +144,13 @@ sub AUTOLOAD {
     no strict "vars";
     my $constname;
     ($constname = $AUTOLOAD) =~ s/.*:://;
+    return if $constname eq "DESTROY";
     croak "Net::Pcap::constant() not defined" if $constname eq 'constant';
     my ($error, $val) = constant($constname);
     if ($error) { croak $error; }
 
-    {   no strict "refs";
+    {
+        no strict "refs";
 	# Fixed between 5.005_53 and 5.005_61
 #XXX    if ($] >= 5.00561) {
 #XXX        *$AUTOLOAD = sub () { $val };
@@ -185,6 +187,36 @@ sub findalldevs {
 
     # if here, the function was called with incorrect arguments
     ref $_[0] ne 'HASH' and croak "arg1 not a hash ref";
+}
+
+# set up internal classes for the object-oriented API
+@pcap_tPtr::ISA = 
+@pcap_dumper_t::ISA = 
+@pcap_bpf_program_tPtr::ISA =
+@pcap_send_queuePtr::ISA = 
+    qw(Net::Pcap);
+
+
+sub new {
+    my ($package, @args) = @_;
+
+    # check number of arguments
+    croak "Odd number of arguments" if @args % 2;
+    my %arg = @args;
+
+    if ($package eq "Net::Pcap") {
+        my $err;
+        my $dev = $arg{device} || $arg{dev} || pcap_lookupdev(\$err);
+        my $snaplen = $arg{snaplen} || 256;
+        my $promisc = $arg{promisc} ||   1;
+        my $timeout = $arg{timeout} ||  10;
+        my $pcap = pcap_open_live($dev, $snaplen, $promisc, $timeout, \$err)
+            or croak "Can't open device $dev: $err";
+        return $pcap
+    }
+    else {
+        croak "Unexpected package $package"
+    }
 }
 
 
