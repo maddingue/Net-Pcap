@@ -47,6 +47,8 @@ extern "C" {
 #endif
 
 
+typedef struct bpf_program  pcap_bpf_program_t;
+
 /* Wrapper for callback function */
 
 SV *callback_fn;
@@ -80,7 +82,7 @@ void callback_wrapper(u_char *user, const struct pcap_pkthdr *h, const u_char *p
 }
 
 
-MODULE = Net::Pcap	PACKAGE = Net::Pcap	 PREFIX = pcap_
+MODULE = Net::Pcap      PACKAGE = Net::Pcap     PREFIX = pcap_
 
 INCLUDE: const-xs.inc
 
@@ -564,10 +566,10 @@ pcap_compile(p, fp, str, optimize, mask)
 
 	CODE:
 		if (SvROK(fp)) {
-			struct bpf_program *real_fp = safemalloc(sizeof(struct bpf_program));
+			pcap_bpf_program_t *real_fp = safemalloc(sizeof(pcap_bpf_program_t));
 			*(pcap_geterr(p)) = '\0';   /* reset error string */
 			RETVAL = pcap_compile(p, real_fp, str, optimize, mask);
-			sv_setref_pv(SvRV(fp), "struct bpf_programPtr", (void *)real_fp);
+			sv_setref_pv(SvRV(fp), "pcap_bpf_program_tPtr", (void *)real_fp);
 
 		} else
 			croak("arg2 not a reference");
@@ -588,9 +590,9 @@ pcap_compile_nopcap(snaplen, linktype, fp, str, optimize, mask)
 
     CODE:
 		if (SvROK(fp)) {
-			struct bpf_program *real_fp = safemalloc(sizeof(struct bpf_program));
+			pcap_bpf_program_t *real_fp = safemalloc(sizeof(pcap_bpf_program_t));
 			RETVAL = pcap_compile_nopcap(snaplen, linktype, real_fp, str, optimize, mask);
-			sv_setref_pv(SvRV(fp), "struct bpf_programPtr", (void *)real_fp);
+			sv_setref_pv(SvRV(fp), "pcap_bpf_program_tPtr", (void *)real_fp);
 
 		} else
 			croak("arg3 not a reference");
@@ -603,12 +605,12 @@ pcap_compile_nopcap(snaplen, linktype, fp, str, optimize, mask)
 int 
 pcap_setfilter(p, fp)
 	pcap_t *p
-	struct bpf_program *fp
+	pcap_bpf_program_t *fp
 
 
 void
 pcap_freecode(fp)
-	struct bpf_program *fp
+	pcap_bpf_program_t *fp
 
 
 void
@@ -979,7 +981,7 @@ DESTROY(queue)
         pcap_sendqueue_destroy(queue);
 
 
-MODULE = Net::Pcap	PACKAGE = Net::Pcap	PREFIX = pcap_
+MODULE = Net::Pcap      PACKAGE = Net::Pcap     PREFIX = pcap_
 
 int
 pcap_sendqueue_queue(queue, header, p)
