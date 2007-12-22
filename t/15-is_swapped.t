@@ -13,7 +13,8 @@ my $is_big_endian    = unpack("h*", pack("s", 1)) =~ /01/;
 my $is_little_endian = unpack("h*", pack("s", 1)) =~ /^1/;
 
 is( $is_big_endian, !$is_little_endian, "checking flags consistency" );
-diag("This platform has been detected as a ".($is_big_endian?"big":"little")." endian architecture");
+my $type = $is_big_endian ? "big" : "little";
+diag("This platform has been detected as a $type endian architecture");
 
 # make these values numbers because is_swapped() return 0 or 1, not true or false
 $is_big_endian += 0;  $is_little_endian += 0;
