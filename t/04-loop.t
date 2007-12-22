@@ -62,11 +62,9 @@ sub process_packet {
     $count++;
 }
 
-my $retval = 0;
-eval { $retval = Net::Pcap::loop($pcap, $total, \&process_packet, $user_text) };
+my $retval = eval { Net::Pcap::loop($pcap, $total, \&process_packet, $user_text) };
 is(   $@,   '', "loop()" );
 is( $count, $total, "all packets processed" );
 is( $retval, 0, "checking return value" );
 
 Net::Pcap::close($pcap);
-
