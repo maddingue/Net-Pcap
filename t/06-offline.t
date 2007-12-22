@@ -63,7 +63,8 @@ sub store_packet {
     for my $field (qw(len caplen tv_sec tv_usec)) {
         ok( exists $header->{$field}, "    - field '$field' is present" );
         ok( defined $header->{$field}, "    - field '$field' is defined" );
-        like( $header->{$field}, '/^\d+$/', "    - field '$field' is a number" );
+        like( $header->{$field}, '/^\d+$/', 
+            "    - field '$field' is a number: $header->{$field}" );
     }
 
     ok( $header->{caplen} <= $header->{len}, "    - caplen <= len" );
