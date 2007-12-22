@@ -1,3 +1,4 @@
+use strict;
 use Socket;
 
 $ENV{'LANG'} = $ENV{'LANGUAGE'} = $ENV{'LC_MESSAGES'} = 'C';
@@ -47,14 +48,15 @@ sub is_allowed_to_use_pcap {
         eval 'no warnings; use Win32; $is_admin = Win32::IsAdminUser()';
         $is_admin = 1 if $@; # Win32::IsAdminUser() not available
         return $is_admin
+    }
 
     # Unix systems
-    } else {
+    else {
         if(socket(S, PF_INET, SOCK_RAW, getprotobyname('icmp'))) {
             close(S);
             return 1
-
-        } else {
+        }
+        else {
             return 0
         }
     }
@@ -70,7 +72,7 @@ my $err;
 my %devs = ();
 my @devs = Net::Pcap::findalldevs(\%devs, \$err);
 
-if(@devs) {
+if (@devs) {
     while($devs[0] eq 'lo' or $devs[0] eq 'lo0' or $devs[0] =~ /GenericDialupAdapter/) {
         shift @devs
     }
