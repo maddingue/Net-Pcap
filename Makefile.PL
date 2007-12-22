@@ -37,7 +37,7 @@ for my $arg (@ARGV) {
 #      in recent version and is the only function that can be called 
 #      with no argument.
 if ($has_Win32) { # ActivePerl, Cygwin
-    die <<"REASON" unless have_library('wpcap', 'blank', 'pcap');
+    warn <<"REASON" and exit unless have_library('wpcap', 'blank', 'pcap');
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The WinPcap driver is not installed on this machine. \a
 
@@ -62,7 +62,7 @@ Or get and install the WinPcap developer's pack from
 REASON
 
 } else { # other systems (Unix)
-    die <<"REASON" unless have_library('pcap');
+    warn <<"REASON" and exit unless have_library('pcap');
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to lack the pcap(3) library. \a
 
