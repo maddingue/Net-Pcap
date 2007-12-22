@@ -8,7 +8,7 @@ use Utils;
 plan skip_all => "pcap_open_dead() is not available" unless is_available('pcap_open_dead');
 plan tests => 5;
 
-eval "use Test::Exception"; my $has_test_exception = !$@;
+my $has_test_exception = eval "use Test::Exception; 1";
 
 my($pcap,$datalink) = ('',0);  # datalink == DLT_NULL => no link-layer encapsulation
 

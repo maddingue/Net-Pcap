@@ -9,8 +9,13 @@ plan tests => 2;
 my $version = eval { Net::Pcap::lib_version() };
 is( $@, '', "lib_version()" );
 diag($version);
+
 if ($^O eq 'MSWin32' or $^O eq 'cygwin') {
     like( $version, '/^WinPcap version \d\.\d+/', " - checking version string ($version)" );
-} else {
-    like( $version, '/^libpcap version (?:\d\.\d+\.\d+|unknown \(pre 0\.8\))$/', " - checking version string ($version)" );
+}
+else {
+    like( $version, 
+            '/^libpcap version (?:\d\.\d+\.\d+|unknown \(pre 0\.8\))$/', 
+            " - checking version string ($version)"
+    );
 }

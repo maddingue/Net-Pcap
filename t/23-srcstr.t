@@ -8,7 +8,7 @@ use Utils;
 plan skip_all => "pcap_createsrcstr() is not available" unless is_available('pcap_createsrcstr');
 plan tests => 18;
 
-eval "use Test::Exception"; my $has_test_exception = !$@;
+my $has_test_exception = eval "use Test::Exception; 1";
 
 my($src,$r,$err) = ('',0,'');
 my($type,$host,$port,$name) = ('rpcap', 'fangorn', 12345, 'eth0');

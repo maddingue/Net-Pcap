@@ -29,4 +29,3 @@ $pcap = Net::Pcap::open_offline(File::Spec->catfile(qw(t samples ping-ietf-20pk-
 isa_ok( $pcap, 'pcap_tPtr', "\$pcap" );
 is( Net::Pcap::is_swapped($pcap) , $is_big_endian, "testing with a little endian dump" );
 Net::Pcap::close($pcap);
-

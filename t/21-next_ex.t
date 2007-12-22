@@ -13,7 +13,7 @@ plan skip_all => "must be run as root" unless is_allowed_to_use_pcap();
 plan skip_all => "no network device available" unless find_network_device();
 plan tests => $total * 17 + 4;
 
-eval "use Test::Exception"; my $has_test_exception = !$@;
+my $has_test_exception = eval "use Test::Exception; 1";
 
 my($dev,$pcap,$net,$mask,$filter,$data,$r,$err) = ('','','','','','','');
 my %header = ();

@@ -7,7 +7,7 @@ use Utils;
 
 plan tests => 29;
 
-eval "use Test::Exception"; my $has_test_exception = !$@;
+my $has_test_exception = eval "use Test::Exception; 1";
 
 my($dev,$net,$mask,$pcap,$filter,$res,$err) = ('','',0,'','','','');
 

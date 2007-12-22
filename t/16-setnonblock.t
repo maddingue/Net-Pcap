@@ -10,7 +10,7 @@ plan skip_all => "pcap_setnonblock() and pcap_getnonblock() are not available"
   unless is_available('pcap_setnonblock');
 plan tests => 23;
 
-eval "use Test::Exception"; my $has_test_exception = !$@;
+my $has_test_exception = eval "use Test::Exception; 1";
 
 my($dev,$pcap,$r,$err) = ('','','','');
 

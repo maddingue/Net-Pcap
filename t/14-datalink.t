@@ -38,7 +38,7 @@ plan skip_all => "extended datalink related functions are not available"
 
 plan tests => keys(%name2val) * 2 + keys(%val2name) * 2 + keys(%val2descr) * 2 + 23;
 
-eval "use Test::Exception"; my $has_test_exception = !$@;
+my $has_test_exception = eval "use Test::Exception; 1";
 
 my($dev,$pcap,$datalink,$r,$err) = ('','','','','');
 
