@@ -5,6 +5,7 @@
 pcap_t *                T_PTROBJ
 pcap_dumper_t *         T_PTROBJ
 struct bpf_program *    T_PTROBJ
+pcap_bpf_program_t *    T_PTROBJ
 pcap_send_queue *       T_PTROBJ
 bpf_u_int32             T_UV
 u_int                   T_UV

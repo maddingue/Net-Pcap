@@ -40,7 +40,7 @@ SKIP: {
     is(   $res,  0, " - result must be null: $res" );
     ok( defined $filter, " - \$filter is defined" );
     isa_ok( $filter, 'SCALAR', " - \$filter" );
-    isa_ok( $filter, 'struct bpf_programPtr', " - \$filter" );
+    isa_ok( $filter, 'pcap_bpf_program_tPtr', " - \$filter" );
 }
 
 
@@ -95,7 +95,7 @@ SKIP: {
 
         throws_ok(sub {
             Net::Pcap::setfilter($pcap, 0)
-        }, '/^fp is not of type struct bpf_programPtr/', 
+        }, '/^fp is not of type pcap_bpf_program_tPtr/', 
            "calling setfilter() with incorrect argument type for arg2");
 
         # freecode() errors
@@ -106,7 +106,7 @@ SKIP: {
 
         throws_ok(sub {
             Net::Pcap::freecode(0)
-        }, '/^fp is not of type struct bpf_programPtr/', 
+        }, '/^fp is not of type pcap_bpf_program_tPtr/', 
            "calling freecode() with incorrect argument type for arg1");
 
     }
@@ -117,7 +117,7 @@ SKIP: {
     is(   $res,  0, " - result must be null: $res" );
     ok( defined $filter, " - \$filter is defined" );
     isa_ok( $filter, 'SCALAR', " - \$filter" );
-    isa_ok( $filter, 'struct bpf_programPtr', " - \$filter" );
+    isa_ok( $filter, 'pcap_bpf_program_tPtr', " - \$filter" );
 
     # Testing geterr()
     eval { $err = Net::Pcap::geterr($pcap) };
