@@ -2,10 +2,14 @@ The (quite complex) revision history for Net-Pcap
 
 2007.12.02 - 0.15 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] CPAN-RT#30745: Fix WinPcap support.
+  - [BUGFIX] CPAN-RT#25076: Fix next_ex().
   - [API] Now providing "pcap_"-prefixed aliases for all functions.
     Documentation was changed to use these names instead of the old ones.
   - [CMD] pcapinfo(1) no longer need IO::Interface.
   - [TESTS] CPAN-RT#30903: Fix t/03-openlive.t failure on Linux.
+  - [DOC] CPAN-RT#27369: Several documentation fixes.
+  - [DOC] CPAN-RT#31111: Document that pcap_stats() does not work 
+    on savefiles.
 
 2006.09.11 - 0.15_01 - Sebastien Aperghis-Tramoni (SAPER)
   - [DIST] Rewrote the functions detection code using DynaLoader.
