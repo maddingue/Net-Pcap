@@ -22,7 +22,7 @@ my $pcap = open_live($dev, $options{snaplen}, !$options{promisc}, 5, \$err)
 my $dumper;
 if ($options{writeto}) {
     $dumper = dump_open($pcap, $options{writeto}) 
-        or die "fatal: can't write to file '$options{witeto}': $!\n";
+        or die "fatal: can't write to file '$options{writeto}': $!\n";
 }
 
 loop($pcap, $options{count}, \&handle_packet, '');
