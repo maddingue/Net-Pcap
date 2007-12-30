@@ -5,7 +5,8 @@ use ExtUtils::MakeMaker;
 eval "use ExtUtils::MakeMaker::Coverage";
 use File::Spec;
 
-my($DEBUG,%options,$DEVNULL,$is_Win32,$has_Win32);
+
+my ($DEBUG, %options, $DEVNULL, $is_Win32, $has_Win32);
 
 if ($^O eq 'MSWin32') {
     $options{LIBS}    = '-lwpcap';
@@ -13,15 +14,15 @@ if ($^O eq 'MSWin32') {
 
     # patch ActivePerl CORE/sys/socket.h
     win32_sys_socket_patch();
-
-} elsif ($^O eq 'cygwin') {
+}
+elsif ($^O eq 'cygwin') {
     $options{LIBS}    = '-lwpcap';
     $options{DEFINE}  = '-DWPCAP -D_CYGWIN -DWIN32';
 
     cygwin_pcap_headers();
-
-} else {
-    $options{CCFLAGS} = '-Wall' if $Config{cc} eq 'gcc' and $] >= 5.006;
+}
+else {
+    $options{CCFLAGS} = '-Wall -Wwrite-strings' if $Config{ccname} eq 'gcc' and $] >= 5.006;
     $options{LIBS}    = '-lpcap';
 }
 
