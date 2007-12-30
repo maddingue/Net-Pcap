@@ -17,10 +17,6 @@ my $error = $@;
 plan tests => 18;
 is( $error, '', "use POE::Component::Pcap" );
 
-# string-eval'd because POE is loaded at run-time and its variables 
-# constants used in the code below will cause a compile error
-eval <<'CODE'; die $@ if $@;
-
 my $dev = find_network_device();
 
 SKIP: {
@@ -37,35 +33,35 @@ SKIP: {
     );
 
     #diag "[POE] run";
-    $poe_kernel->run;
+    POE::Kernel->run;
 }
 
 
 sub start {
-    #diag "[POE:start] spawning new Pcap session ", $_[SESSION]->ID, " on device $dev";
+    #diag "[POE:start] spawning new Pcap session ", $_[&SESSION]->ID, " on device $dev";
     POE::Component::Pcap->spawn(
         Alias => 'pcap',  Device => $dev,
-        Dispatch => 'got_packet',  Session => $_[SESSION],
+        Dispatch => 'got_packet',  Session => $_[&SESSION],
     );
 
-    $_[KERNEL]->post(pcap => open_live => $dev);
-    $_[KERNEL]->post(pcap => 'run');
+    $_[&KERNEL]->post(pcap => open_live => $dev);
+    $_[&KERNEL]->post(pcap => 'run');
 }
 
 sub stop {
     #diag "[POE:stop]";
-    $_[KERNEL]->post(pcap => 'shutdown');
+    $_[&KERNEL]->post(pcap => 'shutdown');
 }
 
 sub got_packet {
     #diag "[POE:got_packet]";
-    my $packets = $_[ARG0];
+    my $packets = $_[&ARG0];
 
     # process the first packet only
     process_packet(@{ $packets->[0] });
 
     # send a message to stop the capture
-    $_[KERNEL]->post(pcap => 'shutdown');
+    $_[&KERNEL]->post(pcap => 'shutdown');
 }
 
 sub process_packet {
@@ -87,5 +83,3 @@ sub process_packet {
     ok( defined $packet,        " - packet is defined" );
     is( length $packet, $header->{caplen}, " - packet has the advertised size" );
 }
-
-CODE
