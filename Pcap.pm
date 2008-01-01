@@ -189,36 +189,6 @@ sub findalldevs {
     ref $_[0] ne 'HASH' and croak "arg1 not a hash ref";
 }
 
-# set up internal classes for the object-oriented API
-@pcap_tPtr::ISA = 
-@pcap_dumper_t::ISA = 
-@pcap_bpf_program_tPtr::ISA =
-@pcap_send_queuePtr::ISA = 
-    qw(Net::Pcap);
-
-
-sub new {
-    my ($package, @args) = @_;
-
-    # check number of arguments
-    croak "Odd number of arguments" if @args % 2;
-    my %arg = @args;
-
-    if ($package eq "Net::Pcap") {
-        my $err;
-        my $dev = $arg{device} || $arg{dev} || pcap_lookupdev(\$err);
-        my $snaplen = $arg{snaplen} || 256;
-        my $promisc = $arg{promisc} ||   1;
-        my $timeout = $arg{timeout} ||  10;
-        my $pcap = pcap_open_live($dev, $snaplen, $promisc, $timeout, \$err)
-            or croak "Can't open device $dev: $err";
-        return $pcap
-    }
-    else {
-        croak "Unexpected package $package"
-    }
-}
-
 
 1;
 
