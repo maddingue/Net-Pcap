@@ -134,7 +134,7 @@ pcap_lookupnet(device, net, mask, err)
 	CODE:
 		if (SvROK(net) && SvROK(mask) && SvROK(err)) {
 			char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
-			unsigned int netp, maskp;
+			bpf_u_int32 netp, maskp;
 			SV *net_sv  = SvRV(net);
 			SV *mask_sv = SvRV(mask);
 			SV *err_sv  = SvRV(err);
@@ -145,8 +145,8 @@ pcap_lookupnet(device, net, mask, err)
 			maskp = ntohl(maskp);
 
 			if (RETVAL != -1) {
-				sv_setiv(net_sv, netp);
-				sv_setiv(mask_sv, maskp);
+				sv_setuv(net_sv, netp);
+				sv_setuv(mask_sv, maskp);
 				err_sv = &PL_sv_undef;
 			} else {
 				sv_setpv(err_sv, errbuf);
