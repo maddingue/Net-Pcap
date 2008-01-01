@@ -4,7 +4,7 @@
 # An interface to the LBL pcap(3) library.  This module simply
 # bootstraps the extensions defined in Pcap.xs
 #
-# Copyright (C) 2005, 2006, 2007 Sebastien Aperghis-Tramoni. All rights reserved.
+# Copyright (C) 2005, 2006, 2007, 2008 Sebastien Aperghis-Tramoni. All rights reserved.
 # Copyright (C) 2003 Marco Carnut. All rights reserved. 
 # Copyright (C) 1999, 2000 Tim Potter. All rights reserved. 
 # Copyright (C) 1998 Bo Adler. All rights reserved. 
@@ -1198,7 +1198,7 @@ David Morel, Scott Lanning, Rafael Garcia-Suarez, Karl Y. Pradene.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright (C) 2005, 2006, 2007 SE<eacute>bastien Aperghis-Tramoni.
+Copyright (C) 2005, 2006, 2007, 2008 SE<eacute>bastien Aperghis-Tramoni.
 All rights reserved. 
 
 Copyright (C) 2003 Marco Carnut. All rights reserved. 
