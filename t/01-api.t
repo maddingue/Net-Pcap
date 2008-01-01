@@ -3,9 +3,9 @@ use strict;
 use Test::More;
 use Net::Pcap;
 
-plan tests => 51;
+plan tests => 102;
 
-# check that the following functions are available
+# check that the following functions are available (old API)
 can_ok( 'Net::Pcap', 'Net::Pcap::lookupdev' );
 can_ok( 'Net::Pcap', 'Net::Pcap::findalldevs' );
 can_ok( 'Net::Pcap', 'Net::Pcap::lookupnet' );
@@ -58,4 +58,59 @@ can_ok( 'Net::Pcap', 'Net::Pcap::setmode' );
 can_ok( 'Net::Pcap', 'Net::Pcap::sendqueue_alloc' );
 can_ok( 'Net::Pcap', 'Net::Pcap::sendqueue_queue' );
 can_ok( 'Net::Pcap', 'Net::Pcap::sendqueue_transmit' );
+
+
+# check that the following functions are available (new API)
+can_ok( 'Net::Pcap', 'pcap_lookupdev' );
+can_ok( 'Net::Pcap', 'pcap_findalldevs' );
+can_ok( 'Net::Pcap', 'pcap_lookupnet' );
+can_ok( 'Net::Pcap', 'pcap_open_live' );
+can_ok( 'Net::Pcap', 'pcap_open_dead' );
+can_ok( 'Net::Pcap', 'pcap_setnonblock' );
+can_ok( 'Net::Pcap', 'pcap_getnonblock' );
+can_ok( 'Net::Pcap', 'pcap_loop' );
+can_ok( 'Net::Pcap', 'pcap_open_offline' );
+can_ok( 'Net::Pcap', 'pcap_close' );
+can_ok( 'Net::Pcap', 'pcap_dispatch' );
+can_ok( 'Net::Pcap', 'pcap_next' );
+can_ok( 'Net::Pcap', 'pcap_next_ex' );
+can_ok( 'Net::Pcap', 'pcap_compile' );
+can_ok( 'Net::Pcap', 'pcap_compile_nopcap' );
+can_ok( 'Net::Pcap', 'pcap_freecode' );
+can_ok( 'Net::Pcap', 'pcap_setfilter' );
+can_ok( 'Net::Pcap', 'pcap_dump_open' );
+can_ok( 'Net::Pcap', 'pcap_dump' );
+can_ok( 'Net::Pcap', 'pcap_dump_flush' );
+can_ok( 'Net::Pcap', 'pcap_dump_file' );
+can_ok( 'Net::Pcap', 'pcap_dump_close' );
+can_ok( 'Net::Pcap', 'pcap_datalink' );
+can_ok( 'Net::Pcap', 'pcap_set_datalink' );
+can_ok( 'Net::Pcap', 'pcap_datalink_name_to_val' );
+can_ok( 'Net::Pcap', 'pcap_datalink_val_to_name' );
+can_ok( 'Net::Pcap', 'pcap_datalink_val_to_description' );
+can_ok( 'Net::Pcap', 'pcap_snapshot' );
+can_ok( 'Net::Pcap', 'pcap_is_swapped' );
+can_ok( 'Net::Pcap', 'pcap_major_version' );
+can_ok( 'Net::Pcap', 'pcap_minor_version' );
+can_ok( 'Net::Pcap', 'pcap_lib_version' );
+can_ok( 'Net::Pcap', 'pcap_stats' );
+can_ok( 'Net::Pcap', 'pcap_file' );
+can_ok( 'Net::Pcap', 'pcap_fileno' );
+can_ok( 'Net::Pcap', 'pcap_get_selectable_fd' );
+can_ok( 'Net::Pcap', 'pcap_geterr' );
+can_ok( 'Net::Pcap', 'pcap_strerror' );
+can_ok( 'Net::Pcap', 'pcap_perror' );
+
+can_ok( 'Net::Pcap', 'pcap_createsrcstr' );
+can_ok( 'Net::Pcap', 'pcap_parsesrcstr' );
+can_ok( 'Net::Pcap', 'pcap_getevent' );
+can_ok( 'Net::Pcap', 'pcap_open' );
+can_ok( 'Net::Pcap', 'pcap_sendpacket' );
+can_ok( 'Net::Pcap', 'pcap_setbuff' );
+can_ok( 'Net::Pcap', 'pcap_setuserbuffer' );
+can_ok( 'Net::Pcap', 'pcap_setmintocopy' );
+can_ok( 'Net::Pcap', 'pcap_setmode' );
+can_ok( 'Net::Pcap', 'pcap_sendqueue_alloc' );
+can_ok( 'Net::Pcap', 'pcap_sendqueue_queue' );
+can_ok( 'Net::Pcap', 'pcap_sendqueue_transmit' );
 
