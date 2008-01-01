@@ -39,6 +39,10 @@ INSTALLATION
     address on your network segment.  Consult the source for individual 
     tests for more information.
 
+    You can select the interface Net::Pcap will use for its tests by 
+    creating a file device.txt in the distribution root directory and 
+    putting the device name inside.
+
     Net::Pcap is compatible with all the versions of the Pcap library, 
     including the old BSD ones and the Windows port WinPcap.
 
@@ -63,6 +67,9 @@ INSTALLATION
 
     See also the corresponding CPAN Testers page: 
         http://testers.cpan.org/show/Net-Pcap.html
+
+    and the CPAN Testers Matrix:
+        http://bbbike.radzeit.de/~slaven/cpantestersmatrix.cgi?dist=Net-Pcap
 
 
 HISTORY
