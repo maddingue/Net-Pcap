@@ -49,7 +49,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
 
 {
     no strict "vars";
-    $VERSION = '0.15';
+    $VERSION = '0.16';
 
     @ISA = qw(Exporter);
 
@@ -200,7 +200,7 @@ Net::Pcap - Interface to pcap(3) LBL packet capture library
 
 =head1 VERSION
 
-Version 0.15
+Version 0.16
 
 =head1 SYNOPSIS
 
