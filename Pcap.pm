@@ -30,7 +30,7 @@ my @func_short_names = qw(
     datalink_val_to_description
     snapshot  is_swapped  major_version  minor_version  stats
     file  fileno  get_selectable_fd  geterr  strerror  perror
-    lib_version  createsrcstr  parsesrcstr  open  setbuff  setbuff
+    lib_version  createsrcstr  parsesrcstr  open  setbuff  setuserbuffer
     setmode  setmintocopy  getevent  sendpacket
     sendqueue_alloc  sendqueue_queue  sendqueue_transmit
 );
