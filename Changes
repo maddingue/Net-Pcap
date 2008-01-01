@@ -1,4 +1,11 @@
-The (quite complex) revision history for Net-Pcap
+The revision history for Net-Pcap
+
+2008.01.01 - 0.16 - Sebastien Aperghis-Tramoni (SAPER)
+  - [BUGFIX] A typo prevented the new function names from working.
+  - [TESTS] Added new tests: 21-next_ex.t, 22-open.t, 23-srcstr.t, 
+    50-poe-component-pcap.t
+  - [TESTS] Added support for user prefered device. See README.
+  - [TESTS] Improved small bits of the tests here and there.
 
 2007.12.02 - 0.15 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] CPAN-RT#30745: Fix WinPcap support.
