@@ -16,7 +16,8 @@ $dev = find_network_device();
 $res = Net::Pcap::lookupnet($dev, \$net, \$mask, \$err);
 
 SKIP: {
-    skip "pcap_compile_nopcap() is not available", unless is_available('pcap_compile_nopcap');
+    skip "pcap_compile_nopcap() is not available", 7 
+        unless is_available('pcap_compile_nopcap');
 
     # Testing error messages
     SKIP: {
