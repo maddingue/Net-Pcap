@@ -62,13 +62,7 @@ is(   $err, '', " - \$err must be null: $err" ); $err = '';
 my $fakedev = 'this is not a device';
 eval { $pcap = Net::Pcap::open_live($fakedev, 1024, 1, 0, \$err) };
 is(   $@,   '', "open_live()" );
-if($^O eq 'MSWin32' or $^O eq 'cygwin') {
-    like( $err, '/^Error opening adapter:/', " - \$err must be set: $err" );
-} elsif($^O eq 'darwin' or $^O eq 'freebsd' or $^O eq 'openbsd') {
-    like( $err, "/^(?:BIOCSETIF: )?$fakedev: Device not configured/", " - \$err must be set: $err" );
-} else {
-    like( $err, '/^(?:bind|ioctl|SIOCGIFHWADDR): (?:No such device)/', " - \$err must be set: $err" );
-}
+cmp_ok( length($err), '>', 0, " - \$err must be set: $err" );
 is( $pcap, undef, " - \$pcap isn't defined" );
 $err = '';
 
