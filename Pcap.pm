@@ -1090,7 +1090,7 @@ current at any time as they are both stored in global variables.
 
 Please report any bugs or feature requests to
 C<bug-Net-Pcap@rt.cpan.org>, or through the web interface at
-L<https://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-Pcap>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=Net-Pcap>.
 I will be notified, and then you'll automatically be notified
 of progress on your bug as I make changes.
 
