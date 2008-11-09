@@ -1,6 +1,6 @@
 NAME
 
-    Net-Pcap - Interface to pcap(3) LBL packet capture library
+    Net::Pcap - Interface to pcap(3) LBL packet capture library
 
 
 DESCRIPTION
@@ -15,22 +15,26 @@ DESCRIPTION
 
 INSTALLATION
 
-    If your pcap header files are installed somewhere strange, create 
-    the Makefile using the INC and/or LIBS option.
+    This module needs an ANSI-compliant compiler, the libpcap and
+    its C headers to be installed on the target system.  On many
+    operating systems, simply install the "libpcap" and "libpcap-dev"
+    packages.
 
-        $ perl Makefile.PL INC=-I/usr/local/include/pcap \
-            LIBS='-L/usr/lib/pcap -lpcap'
+    If the library and C headers are not installed in a standard
+    location, please provide the appropriate paths to Makefile.PL
+    using the INC and/or LIBS options:
+
+        $ perl Makefile.PL INC=-I/opt/pcap/include \
+            LIBS='-L/opt/pcap/lib -lpcap'
 
     Then compile the extension as per usual:
 
-        $ make
-        $ make test
+        $ make all test
         $ make install
 
     To install the extension in a private directory, you can use the
     PREFIX option when creating Makefile.PL.
 
-    An ANSI-compliant compiler is required to compile the extension. 
     For most of the tests, an administrative account is required 
     since opening a network interface in promiscuous mode is a 
     privileged operation.  Some tests also require a working network 
@@ -72,6 +76,31 @@ INSTALLATION
         http://bbbike.radzeit.de/~slaven/cpantestersmatrix.cgi?dist=Net-Pcap
 
 
+SUPPORT AND DOCUMENTATION
+
+    After installing, you can find documentation for this module with
+    the perldoc command.
+
+        perldoc Net::Pcap
+
+    You can also look for information at:
+
+        Search CPAN
+            http://search.cpan.org/dist/Net-Pcap
+
+        CPAN Request Tracker:
+            http://rt.cpan.org/Dist/Display.html?Name=Net-Pcap
+
+        AnnoCPAN, annotated CPAN documentation: 
+            http://annocpan.org/dist/Net-Pcap
+
+        CPAN Ratings:
+            http://cpanratings.perl.org/d/Net-Pcap
+
+    See also the examples scripts provided in the distribution, in the
+    examples/ subdirectory.
+
+
 HISTORY
 
     The original version of Net::Pcap, version 0.01, was written by 
@@ -100,10 +129,10 @@ HISTORY
 COPYRIGHT AND LICENCE
 
     Copyright (C) 2005 Sébastien Aperghis-Tramoni. All rights reserved.
-    Copyright (c) 2003 Marco Carnut. All rights reserved. 
-    Copyright (c) 1999-2000 Tim Potter. All rights reserved. 
-    Copyright (c) 1998 Bo Adler. All rights reserved. 
-    Copyright (c) 1997 Peter Lister. All rights reserved. 
+    Copyright (C) 2003 Marco Carnut. All rights reserved. 
+    Copyright (C) 1999-2000 Tim Potter. All rights reserved. 
+    Copyright (C) 1998 Bo Adler. All rights reserved. 
+    Copyright (C) 1997 Peter Lister. All rights reserved. 
 
     This library is free software; you can redistribute it and/or modify
     it under the same terms as Perl itself.
