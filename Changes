@@ -1,6 +1,8 @@
 The revision history for Net-Pcap
 
 2008.11.xx - 0.17 - Sebastien Aperghis-Tramoni (SAPER)
+  - [BUGFIX] Fix allocated size in pcap_open(), pcap_createsrcstr()
+    and pcap_parsesrcstr(). 
   - [DOC] Improved README.
   - [DOC] Mention Net::Pcap::Easy.
 

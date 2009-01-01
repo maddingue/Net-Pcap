@@ -764,8 +764,8 @@ pcap_createsrcstr(source, type, host, port, name, err)
 
     CODE:
         if (SvROK(source) && SvROK(err)) {
-            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE);
-            char *sourcebuf = safemalloc(PCAP_BUF_SIZE);
+            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *sourcebuf = safemalloc(PCAP_BUF_SIZE+1);
             SV *err_sv = SvRV(err);
             SV *source_sv = SvRV(source);
 
@@ -813,10 +813,10 @@ pcap_parsesrcstr(source, type, host, port, name, err)
 
         else {  
             int rtype;
-            char *hostbuf = safemalloc(PCAP_BUF_SIZE);
-            char *portbuf = safemalloc(PCAP_BUF_SIZE);
-            char *namebuf = safemalloc(PCAP_BUF_SIZE);
-            char *errbuf  = safemalloc(PCAP_ERRBUF_SIZE);
+            char *hostbuf = safemalloc(PCAP_BUF_SIZE+1);
+            char *portbuf = safemalloc(PCAP_BUF_SIZE+1);
+            char *namebuf = safemalloc(PCAP_BUF_SIZE+1);
+            char *errbuf  = safemalloc(PCAP_ERRBUF_SIZE+1);
             SV *type_sv = SvRV(type);
             SV *host_sv = SvRV(host);
             SV *port_sv = SvRV(port);
@@ -866,7 +866,7 @@ pcap_open(source, snaplen, flags, read_timeout, auth, err)
         if ( !SvOK(auth) || (SvOK(auth) && SvROK(auth) && (SvTYPE(SvRV(auth)) == SVt_PVHV)) ) {
             struct pcap_rmtauth real_auth;
             struct pcap_rmtauth * preal_auth;
-            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE);
+            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
             SV *err_sv = SvRV(err);
 
             if (!SvOK(auth)) {      /* if auth (struct pcap_rmtauth) is undef */
