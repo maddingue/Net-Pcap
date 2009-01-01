@@ -1,5 +1,8 @@
 The revision history for Net-Pcap
 
+2008.11.xx - 0.17 - Sebastien Aperghis-Tramoni (SAPER)
+  - [DOC] Improved README.
+
 2008.01.01 - 0.16 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] A typo prevented the new function names from working.
   - [TESTS] Added new tests: 21-next_ex.t, 22-open.t, 23-srcstr.t, 
