@@ -3,8 +3,8 @@
  *
  * XS wrapper for LBL pcap(3) library.
  *
- * Copyright (C) 2005, 2006, 2007, 2008 Sebastien Aperghis-Tramoni with code by 
- *      Jean-Louis Morel. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009 Sebastien Aperghis-Tramoni 
+ *   with some code contributed by Jean-Louis Morel. All rights reserved.
  * Copyright (C) 2003 Marco Carnut. All rights reserved. 
  * Copyright (C) 1999 Tim Potter. All rights reserved. 
  *
