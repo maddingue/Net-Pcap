@@ -95,17 +95,19 @@ pcap_lookupdev(err)
 
 	CODE:
 		if (SvROK(err)) {
-			char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
 			SV *err_sv = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
 			RETVAL = pcap_lookupdev(errbuf);
 #ifdef WPCAP
-			{
+            {   /* Conversion from Unicode to ANSI */
 				int length = lstrlenW((PWSTR)RETVAL) + 2;
-				char *r = safemalloc(length);  /* Conversion from Unicode to ANSI */
+                char *r = NULL;
+                Newx(r, length, char); 
 				WideCharToMultiByte(CP_ACP, 0, (PWSTR)RETVAL, -1, r, length, NULL, NULL);	
 				lstrcpyA(RETVAL, r);
-				safefree(r);
+                Safefree(r);
 			}
 #endif /* WPCAP */
 			if (RETVAL == NULL) {
@@ -133,11 +135,12 @@ pcap_lookupnet(device, net, mask, err)
 
 	CODE:
 		if (SvROK(net) && SvROK(mask) && SvROK(err)) {
-			char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
 			bpf_u_int32 netp, maskp;
 			SV *net_sv  = SvRV(net);
 			SV *mask_sv = SvRV(mask);
 			SV *err_sv  = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
 			RETVAL = pcap_lookupnet(device, &netp, &maskp, errbuf);
 
@@ -174,7 +177,8 @@ pcap_findalldevs_xs(devinfo, err)
     SV * err
  
     PREINIT:
-        char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+        char *errbuf = NULL;
+        Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
     
     PPCODE:
         if ( SvROK(err) && SvROK(devinfo) && (SvTYPE(SvRV(devinfo)) == SVt_PVHV) ) {
@@ -246,8 +250,9 @@ pcap_open_live(device, snaplen, promisc, to_ms, err)
 
 	CODE:
 		if (SvROK(err)) {
-			char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
 			SV *err_sv = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 #ifdef _MSC_VER
             /* Net::Pcap hangs when to_ms == 0 under ActivePerl/MSVC */
             if(to_ms == 0) to_ms = 1;
@@ -286,8 +291,9 @@ pcap_open_offline(fname, err)
 
 	CODE:
 		if (SvROK(err)) {
-			char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
 			SV *err_sv = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
 			RETVAL = pcap_open_offline(fname, errbuf);
 
@@ -321,8 +327,9 @@ pcap_setnonblock(p, nb, err)
 
 	CODE:
 		if (SvROK(err)) {
-			char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
 			SV *err_sv = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
 			RETVAL = pcap_setnonblock(p, nb, errbuf);
 
@@ -349,8 +356,9 @@ pcap_getnonblock(p, err)
 
     CODE:
         if (SvROK(err)) {
-            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
             SV *err_sv = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
             RETVAL = pcap_getnonblock(p, errbuf);
 
@@ -566,7 +574,8 @@ pcap_compile(p, fp, str, optimize, mask)
 
 	CODE:
 		if (SvROK(fp)) {
-			pcap_bpf_program_t *real_fp = safemalloc(sizeof(pcap_bpf_program_t));
+            pcap_bpf_program_t *real_fp = NULL;
+            Newx(real_fp, 1, pcap_bpf_program_t);
 			*(pcap_geterr(p)) = '\0';   /* reset error string */
 			RETVAL = pcap_compile(p, real_fp, str, optimize, mask);
 			sv_setref_pv(SvRV(fp), "pcap_bpf_program_tPtr", (void *)real_fp);
@@ -590,7 +599,8 @@ pcap_compile_nopcap(snaplen, linktype, fp, str, optimize, mask)
 
     CODE:
 		if (SvROK(fp)) {
-			pcap_bpf_program_t *real_fp = safemalloc(sizeof(pcap_bpf_program_t));
+            pcap_bpf_program_t *real_fp = NULL;
+            Newx(real_fp, 1, pcap_bpf_program_t);
 			RETVAL = pcap_compile_nopcap(snaplen, linktype, real_fp, str, optimize, mask);
 			sv_setref_pv(SvRV(fp), "pcap_bpf_program_tPtr", (void *)real_fp);
 
@@ -764,10 +774,12 @@ pcap_createsrcstr(source, type, host, port, name, err)
 
     CODE:
         if (SvROK(source) && SvROK(err)) {
-            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
-            char *sourcebuf = safemalloc(PCAP_BUF_SIZE+1);
+            char *errbuf    = NULL;;
+            char *sourcebuf = NULL;
             SV *err_sv = SvRV(err);
             SV *source_sv = SvRV(source);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
+            Newx(sourcebuf, PCAP_BUF_SIZE+1, char);
 
             RETVAL = pcap_createsrcstr(sourcebuf, type, host, port, name, errbuf);
 
@@ -813,15 +825,19 @@ pcap_parsesrcstr(source, type, host, port, name, err)
 
         else {  
             int rtype;
-            char *hostbuf = safemalloc(PCAP_BUF_SIZE+1);
-            char *portbuf = safemalloc(PCAP_BUF_SIZE+1);
-            char *namebuf = safemalloc(PCAP_BUF_SIZE+1);
-            char *errbuf  = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *hostbuf = NULL;
+            char *portbuf = NULL;
+            char *namebuf = NULL;
+            char *errbuf  = NULL;
             SV *type_sv = SvRV(type);
             SV *host_sv = SvRV(host);
             SV *port_sv = SvRV(port);
             SV *name_sv = SvRV(name);    
             SV *err_sv = SvRV(err);    
+            Newx(hostbuf, PCAP_BUF_SIZE+1, char);
+            Newx(portbuf, PCAP_BUF_SIZE+1, char);
+            Newx(namebuf, PCAP_BUF_SIZE+1, char);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
             RETVAL = pcap_parsesrcstr(source, &rtype, hostbuf, portbuf, namebuf, errbuf);
 
@@ -866,8 +882,9 @@ pcap_open(source, snaplen, flags, read_timeout, auth, err)
         if ( !SvOK(auth) || (SvOK(auth) && SvROK(auth) && (SvTYPE(SvRV(auth)) == SVt_PVHV)) ) {
             struct pcap_rmtauth real_auth;
             struct pcap_rmtauth * preal_auth;
-            char *errbuf = safemalloc(PCAP_ERRBUF_SIZE+1);
+            char *errbuf = NULL;
             SV *err_sv = SvRV(err);
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
 
             if (!SvOK(auth)) {      /* if auth (struct pcap_rmtauth) is undef */
                 preal_auth = NULL;
