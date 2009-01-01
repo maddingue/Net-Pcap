@@ -22,7 +22,8 @@ elsif ($^O eq 'cygwin') {
     cygwin_pcap_headers();
 }
 else {
-    $options{CCFLAGS} = '-Wall -Wwrite-strings' if $Config{ccname} eq 'gcc' and $] >= 5.006;
+    $options{CCFLAGS} = "-Wall -Wwrite-strings"
+        if $Config{ccname} eq "gcc" and $] >= 5.006;
     $options{LIBS}    = '-lpcap';
 }
 
@@ -134,7 +135,7 @@ WriteMakefile(
     },
     dist        => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" }, 
     clean       => { FILES => 'Net-Pcap-* macros.all' }, 
-    %options,        # appropriate CCFLAFS, LDFLAGS and Define's
+    %options,        # appropriate CCFLAGS, LDFLAGS and Define's
 );
 
 if (eval { require ExtUtils::Constant; 1 }) {
