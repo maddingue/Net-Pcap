@@ -21,10 +21,6 @@ extern "C" {
 #include <windows.h>
 #endif
 
-#ifdef _WIN32
-#include <malloc.h>
-#endif
-
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
