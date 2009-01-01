@@ -1139,6 +1139,10 @@ L<POE::Component::Pcap> for using C<Net::Pcap> within POE-based programs.
 
 L<Net::Packet> or L<NetPacket> for decoding and creating network packets.
 
+L<Net::Pcap::Easy> is a module which provides an easier, more Perl-ish
+API than C<Net::Pcap> and integrates some facilities from L<Net::Netmask>
+and C<NetPacket>.
+
 =head2 Base Libraries
 
 L<pcap(3)>, L<tcpdump(8)>
