@@ -196,7 +196,7 @@ pcap_findalldevs_xs(devinfo, err)
                         if (d->description)
                             hv_store(hv, d->name, strlen(d->name), newSVpv(d->description, 0), 0);
                         else
-                            if( (strcmp(d->name,"lo") == 0) || (strcmp(d->name,"lo0") == 0)) 
+                            if ( (strcmp(d->name,"lo") == 0) || (strcmp(d->name,"lo0") == 0)) 
                                 hv_store(hv, d->name, strlen(d->name), 
                                         newSVpv("Loopback device", 0), 0);
                             else
@@ -211,13 +211,13 @@ pcap_findalldevs_xs(devinfo, err)
                 case 3: { /* function is not available */
                     char *dev = pcap_lookupdev(errbuf);
 
-                    if(dev == NULL) {
+                    if (dev == NULL) {
                         sv_setpv(err_sv, errbuf);
                         break;
                     }
 
                     XPUSHs(sv_2mortal(newSVpv(dev, 0)));
-                    if( (strcmp(dev,"lo") == 0) || (strcmp(dev,"lo0") == 0)) 
+                    if ( (strcmp(dev,"lo") == 0) || (strcmp(dev,"lo0") == 0)) 
                         hv_store(hv, dev, strlen(dev), newSVpv("", 0), 0);
                     else
                         hv_store(hv, dev, strlen(dev), newSVpv("No description available", 0), 0);
