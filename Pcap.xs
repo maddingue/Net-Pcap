@@ -97,14 +97,15 @@ pcap_lookupdev(err)
 
 			RETVAL = pcap_lookupdev(errbuf);
 #ifdef WPCAP
-            {   /* Conversion from Unicode to ANSI */
-				int length = lstrlenW((PWSTR)RETVAL) + 2;
-                char *r = NULL;
-                Newx(r, length, char); 
-				WideCharToMultiByte(CP_ACP, 0, (PWSTR)RETVAL, -1, r, length, NULL, NULL);	
-				lstrcpyA(RETVAL, r);
-                Safefree(r);
-			}
+            {   /* Conversion from Windows Unicode (UCS-2) to ANSI */
+                int     size    = lstrlenW((PWSTR)RETVAL) + 2;
+                char    *str    = NULL;
+
+                Newx(str, size, char); 
+                WideCharToMultiByte(CP_ACP, 0, (PWSTR)RETVAL, -1, str, size, NULL, NULL);	
+                lstrcpyA(RETVAL, str);
+                Safefree(str);
+            }
 #endif /* WPCAP */
 			if (RETVAL == NULL) {
 				sv_setpv(err_sv, errbuf);
