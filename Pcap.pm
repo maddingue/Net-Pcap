@@ -219,7 +219,7 @@ Version 0.16
     pcap_close($pcap);
 
     sub process_packet {
-        my($user_data, $header, $packet) = @_;
+        my ($user_data, $header, $packet) = @_;
         # do something ...
     }
 
@@ -450,7 +450,7 @@ The callback function is also passed packet header information and
 packet data like so:
 
     sub process_packet {
-        my($user_data, $header, $packet) = @_;
+        my ($user_data, $header, $packet) = @_;
 
         ...
     }
@@ -484,7 +484,7 @@ B<Example>
     pcap_loop($pcap, 10, \&process_packet, "user data");
 
     sub process_packet {
-        my($user_data, $header, $packet) = @_;
+        my ($user_data, $header, $packet) = @_;
         # ...
     }
 
@@ -632,7 +632,7 @@ B<Example>
     pcap_dump_close($dumper);
 
     sub process_packet {
-        my($user_data, $header, $packet) = @_;
+        my ($user_data, $header, $packet) = @_;
         pcap_dump($dumper, $header, $packet);
     }
 
