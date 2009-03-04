@@ -110,12 +110,13 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
             createsrcstr  parsesrcstr
             setbuff  setuserbuffer  setmode  setmintocopy  getevent  sendpacket
             sendqueue_alloc  sendqueue_queue  sendqueue_transmit
-        ), @func_long_names ], 
+        )], 
     );
 
     @EXPORT = (
         @{$EXPORT_TAGS{pcap}}, 
         @{$EXPORT_TAGS{datalink}}, 
+        @func_long_names,
     );
 
     @EXPORT_OK = (
@@ -309,11 +310,7 @@ C<:rpcap> exports the following constants:
 
 =item *
 
-C<:functions> exports the function names with the same names as the C library, 
-so you can write C<pcap_lookupdev()> instead of C<Net::Pcap::lookupdev()> 
-for example. This should also ease porting C programs to Perl. 
-
-It also exports short names of the functions (without the C<"pcap_"> prefix) 
+C<:functions> short names of the functions (without the C<"pcap_"> prefix) 
 for those which would not cause a clash with an already defined name.
 Namely, the following functions are not available in short form: 
 C<open()>, C<close()>, C<next()>, C<dump()>, C<file()>, C<fileno()>. 
@@ -321,7 +318,8 @@ Using these short names is now discouraged, and may be removed in the future.
 
 =back
 
-The symbols from the C<:datalink> and C<:pcap> tags are exported by default. 
+By default, this module exports the symbols from the C<:datalink> and 
+C<:pcap> tags, and all the functions, with the same names as the C library. 
 
 
 =head1 FUNCTIONS
