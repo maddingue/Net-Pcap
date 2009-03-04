@@ -226,13 +226,15 @@ Version 0.16
 
 =head1 DESCRIPTION
 
-C<Net::Pcap> is a Perl binding to the LBL pcap(3) library.
-The README for libpcap describes itself as:
+C<Net::Pcap> is a Perl binding to the LBL pcap(3) library and its
+Win32 counterpart, the WinPcap library. Pcap (packet capture) is 
+a portable API to capture network packet: it allows applications 
+to capture packets at link-layer, bypassing the normal protocol 
+stack. It also provides features like kernel-level packet filtering
+and access to internal statistics.
 
-  "a system-independent interface for user-level packet capture.
-  libpcap provides a portable framework for low-level network
-  monitoring.  Applications include network statistics collection,
-  security monitoring, network debugging, etc."
+Common applications include network statistics collection, 
+security monitoring, network debugging, etc.
 
 
 =head1 EXPORTS
