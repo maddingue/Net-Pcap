@@ -242,7 +242,7 @@ security monitoring, network debugging, etc.
 
 C<Net::Pcap> supports the following C<Exporter> tags: 
 
-=over 4
+=over
 
 =item *
 
@@ -336,7 +336,7 @@ compatibility with previous versions of C<Net::Pcap>.
 
 =head2 Lookup functions
 
-=over 4
+=over
 
 =item B<pcap_lookupdev(\$err)>
 
@@ -395,7 +395,7 @@ C<$err> parameter is filled with an appropriate error message.
 
 =head2 Packet capture functions
 
-=over 4
+=over
 
 =item B<pcap_open_live($dev, $snaplen, $promisc, $to_ms, \$err)>
 
@@ -460,7 +460,7 @@ packet data like so:
 The header information is a reference to a hash containing the
 following fields.
 
-=over 4
+=over
 
 =item * 
 
@@ -531,7 +531,7 @@ Reads the next available packet on the interface associated with packet
 descriptor C<$pcap>, stores its header in C<\%header> and its data in 
 C<\$packet> and returns a success/failure indication: 
 
-=over 4
+=over
 
 =item *
 
@@ -607,7 +607,7 @@ sets C<$err>.
 
 =head2 Savefile commands
 
-=over 4
+=over
 
 =item B<pcap_dump_open($pcap, $filename)>
 
@@ -660,7 +660,7 @@ Close the savefile associated with the descriptor C<$dumper>.
 
 =head2 Status functions
 
-=over 4
+=over
 
 
 =item B<pcap_datalink($pcap)>
@@ -740,7 +740,7 @@ This function is supported only on live captures, not on savefiles;
 no statistics are stored in savefiles, so no statistics are available 
 when reading from a savefile.
 
-=over 4
+=over
 
 =item *
 
@@ -782,7 +782,7 @@ See L<pcap(3)> for more details.
 
 =head2 Error handling
 
-=over 4
+=over
 
 =item B<pcap_geterr($pcap)>
 
@@ -804,7 +804,7 @@ standard error, prefixed by C<$prefix>.
 
 =head2 Information
 
-=over 4
+=over
 
 =item B<pcap_lib_version()>
 
@@ -820,7 +820,7 @@ The following functions are only available with WinPcap, the Win32 port
 of the Pcap library.  If a called function is not available, it will cleanly 
 C<croak()>. 
 
-=over 4
+=over
 
 =item B<pcap_createsrcstr(\$source, $type, $host, $port, $name, \$err)>
 
@@ -850,7 +850,7 @@ This call is the other way round of C<pcap_createsrcstr()>. It accepts a
 null-terminated string and it returns the parameters related to the source. 
 This includes:
 
-=over 4
+=over
 
 =item *
 
@@ -989,7 +989,7 @@ constants are exported.
 Here are the descriptions of a few data link types. See L<pcap(3)> for a more 
 complete description and semantics associated with each data link. 
 
-=over 4
+=over
 
 =item *
 
@@ -1060,7 +1060,7 @@ C<DLT_APPLE_IP_OVER_IEEE1394> - Apple IP-over-IEEE 1394 (a.k.a. Firewire)
 
 =head1 DIAGNOSTICS
 
-=over 4
+=over
 
 =item C<arg%d not a scalar ref>
 
@@ -1078,7 +1078,7 @@ which expect one or more of its arguments to be references.
 
 The following limitations apply to this version of C<Net::Pcap>.
 
-=over 
+=over
 
 =item *
 
@@ -1098,7 +1098,7 @@ of progress on your bug as I make changes.
 
 Currently known bugs: 
 
-=over 4
+=over
 
 =item *
 
@@ -1171,7 +1171,7 @@ E<lt>jl_morel@bribes.orgE<gt> for WinPcap support.
 
 Previous authors & maintainers: 
 
-=over 4
+=over
 
 =item *
 
