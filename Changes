@@ -7,6 +7,7 @@ The revision history for Net-Pcap
   - [CODE] Replaced all occurrences of safemalloc() with Newx().
   - [DOC] Improved README.
   - [DOC] Mention Net::Pcap::Easy.
+  - [TESTS] Fixed t/17-lib_version.t to handle two digits versions.
 
 2008.01.01 - 0.16 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] A typo prevented the new function names from working.
