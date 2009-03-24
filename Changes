@@ -8,6 +8,8 @@ The revision history for Net-Pcap
   - [DOC] Improved README.
   - [DOC] Mention Net::Pcap::Easy.
   - [TESTS] Fixed t/17-lib_version.t to handle two digits versions.
+  - [TESTS] CPAN-RT#44448: Fixed t/17-lib_version.t to handle
+    versions from the CVS, thanks to Craig Davison.
 
 2008.01.01 - 0.16 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] A typo prevented the new function names from working.
