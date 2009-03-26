@@ -708,6 +708,8 @@ pcap_perl_settings(setting)
     int setting
 
     CODE:
+        RETVAL = 0;
+
         switch (setting) {
             case PERL_SIGNALS_SAFE:
                 RETVAL = newSVuv(PL_signals);
