@@ -35,6 +35,10 @@ extern "C" {
 #include <Win32-Extensions.h>
 #endif
 
+/* Perl specific constants */
+#define PERL_SIGNALS_SAFE       0x00010000
+#define PERL_SIGNALS_UNSAFE     0x00010001
+
 #include "const-c.inc"
 #include "stubs.inc"
 
@@ -713,6 +717,26 @@ pcap_strerror(error)
 
 const char *
 pcap_lib_version()
+
+
+SV *
+pcap_perl_settings(setting)
+    int setting
+
+    CODE:
+        switch (setting) {
+            case PERL_SIGNALS_SAFE:
+                RETVAL = newSVuv(PL_signals);
+                PL_signals = 0;
+                break;
+            case PERL_SIGNALS_UNSAFE:
+                RETVAL = newSVuv(PL_signals);
+                PL_signals = PERL_SIGNALS_UNSAFE_FLAG;
+                break;
+        }
+
+    OUTPUT:
+        RETVAL
 
 
 FILE *
