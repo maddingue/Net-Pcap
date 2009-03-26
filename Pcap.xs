@@ -561,7 +561,7 @@ pcap_dump(p, pkt_header, sp)
 			real_sp = SvPV(sp, PL_na);
 
 			/* Call pcap_dump() */
-			pcap_dump((u_char *)p, &real_h, real_sp);
+			pcap_dump((u_char *)p, &real_h, (u_char *)real_sp);
 
 		} else
             croak("arg2 not a hash ref");
@@ -1003,7 +1003,7 @@ pcap_sendpacket(p, buf)
     SV *buf
 
     CODE:
-        RETVAL = pcap_sendpacket(p, SvPVX(buf), sv_len(buf));  
+        RETVAL = pcap_sendpacket(p, (u_char *)SvPVX(buf), sv_len(buf));  
 
     OUTPUT:
         RETVAL
