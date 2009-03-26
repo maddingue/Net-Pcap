@@ -390,16 +390,12 @@ pcap_dispatch(p, cnt, callback, user)
 
 	CODE:
     {
-		U32 SAVE_signals;
 		callback_fn = newSVsv(callback);
 		user = newSVsv(user);
 
 		*(pcap_geterr(p)) = '\0';   /* reset error string */
 
-		SAVE_signals = PL_signals;  /* Allow the call to be interrupted by signals */
-		PL_signals |= PERL_SIGNALS_UNSAFE_FLAG;
 		RETVAL = pcap_dispatch(p, cnt, callback_wrapper, (u_char *)user);
-		PL_signals = SAVE_signals;
 
 		SvREFCNT_dec(user);
 		SvREFCNT_dec(callback_fn);
@@ -417,14 +413,10 @@ pcap_loop(p, cnt, callback, user)
 
 	CODE:
     {
-		U32 SAVE_signals;
 		callback_fn = newSVsv(callback);
 		user = newSVsv(user);
 
-		SAVE_signals = PL_signals;  /* Allow the call to be interrupted by signals */
-		PL_signals |= PERL_SIGNALS_UNSAFE_FLAG;
 		RETVAL = pcap_loop(p, cnt, callback_wrapper, (u_char *)user);
-		PL_signals = SAVE_signals;
 
 		SvREFCNT_dec(user);
 		SvREFCNT_dec(callback_fn);
@@ -442,15 +434,11 @@ pcap_next(p, pkt_header)
 		if (SvROK(pkt_header) && (SvTYPE(SvRV(pkt_header)) == SVt_PVHV)) {
 			struct pcap_pkthdr real_h;
 			const u_char *result;
-			U32 SAVE_signals;
 			HV *hv;
 
 			memset(&real_h, '\0', sizeof(real_h));
 
-			SAVE_signals = PL_signals;  /* Allow the call to be interrupted by signals */
-			PL_signals |= PERL_SIGNALS_UNSAFE_FLAG;
 			result = pcap_next(p, &real_h);
-			PL_signals = SAVE_signals;
 
 			hv = (HV *)SvRV(pkt_header);	
 	
@@ -484,15 +472,11 @@ pcap_next_ex(p, pkt_header, pkt_data)
         if (SvROK(pkt_header) && (SvTYPE(SvRV(pkt_header)) == SVt_PVHV) && SvROK(pkt_data)) {
 			struct pcap_pkthdr *header;
 			const u_char *data;
-			U32 SAVE_signals;
 			HV *hv;
 
 			memset(&header, '\0', sizeof(header));
 
-			SAVE_signals = PL_signals;  /* Allow the call to be interrupted by signals */
-			PL_signals |= PERL_SIGNALS_UNSAFE_FLAG;
 			RETVAL = pcap_next_ex(p, &header, &data);
-			PL_signals = SAVE_signals;
 
 			hv = (HV *)SvRV(pkt_header);	
 

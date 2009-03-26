@@ -1,6 +1,8 @@
 The revision history for Net-Pcap
 
 2009.03.xx - 0.17 - Sebastien Aperghis-Tramoni (SAPER)
+  - [BUGFIX] CPAN-RT#43308: Net::Pcap no longer enables immediate
+    (unsafe) signals delivery.
   - [BUGFIX] Fix allocated size in pcap_open(), pcap_createsrcstr()
     and pcap_parsesrcstr(). 
   - [API] Now make the C-like API available by default. Added the
