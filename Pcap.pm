@@ -117,6 +117,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
         @{$EXPORT_TAGS{pcap}}, 
         @{$EXPORT_TAGS{datalink}}, 
         @func_long_names,
+        UNSAFE_SIGNALS
     );
 
     @EXPORT_OK = (
@@ -160,6 +161,12 @@ sub AUTOLOAD {
 #XXX    }
     }
     goto &$AUTOLOAD;
+}
+
+
+# pseudo-bloc to enable immediate (unsafe) signals delivery
+sub UNSAFE_SIGNALS (&) {
+    $_[0]->();
 }
 
 
@@ -236,6 +243,41 @@ and access to internal statistics.
 
 Common applications include network statistics collection, 
 security monitoring, network debugging, etc.
+
+
+=head1 NOTES
+
+=head2 Signals handling
+
+Since version 5.7.3, Perl uses a mechanism called "deferred signals"
+to delay signals delivery until "safe" points in the interpreter. 
+See L<perlipc/"Deferred Signals (Safe Signals)"> for a detailled
+explanation.
+
+Since C<Net::Pcap> version 0.08, released in October 2005, the module
+modified the internal variable C<PL_signals> to re-enable immediate
+signals delivery in Perl 5.8 and later within some XS functions
+(CPAN-RT #6320). However, it can create situations where the Perl
+interpreter is less stable and can crash (CPAN-RT #43308). Therefore,
+as of version 0.17, C<Net::Pcap> no longer modifies C<PL_signals> by
+itself, but provides facilities so the user has full control of how
+signals are delivered.
+
+First, there C<pcap_perl_settings()> function allows to select how
+signals are handled:
+
+    pcap_perl_settings(PERL_SIGNALS_UNSAFE);
+    pcap_loop($pcap, 10, \&process_packet, "");
+    pcap_perl_settings(PERL_SIGNALS_SAFE);
+
+Then, to easily make code interruptable, C<Net::Pcap> provides the
+C<UNSAFE_SIGNALS> pseudo-bloc:
+
+    UNSAFE_SIGNALS {
+        pcap_loop($pcap, 10, \&process_packet, "");
+    };
+
+(Stolen from Rafael Garcia-Suarez's C<Perl::Unsafe::Signals>)
 
 
 =head1 EXPORTS
@@ -813,6 +855,36 @@ against.
 
 =back
 
+=head2 Perl specific functions
+
+The following functions are specific to the Perl binding of libpcap.
+
+=over
+
+=item B<pcap_perl_settings($setting)>
+
+Modify internal behaviour of the Perl interpreter.
+
+=over
+
+=item *
+
+C<PERL_SIGNALS_SAFE>, C<PERL_SIGNALS_UNSAFE> respectively enable safe
+or unsafe signals delivery. Returns the previous value of C<PL_signals>.
+See L<"Signals handling">.
+
+B<Example:>
+
+    local $SIG{ALRM} = sub { pcap_breakloop() };
+    alarm 60;
+
+    pcap_perl_settings(PERL_SIGNALS_UNSAFE);
+    pcap_loop($pcap, 10, \&process_packet, "");
+    pcap_perl_settings(PERL_SIGNALS_SAFE);
+
+=back
+
+=back
 
 =head2 WinPcap specific functions
 
