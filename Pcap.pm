@@ -117,7 +117,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
         @{$EXPORT_TAGS{pcap}}, 
         @{$EXPORT_TAGS{datalink}}, 
         @func_long_names,
-        UNSAFE_SIGNALS
+        "UNSAFE_SIGNALS",
     );
 
     @EXPORT_OK = (
