@@ -133,6 +133,11 @@ WriteMakefile(
         'Socket'        => '0',
         'Test::More'    => '0.45',
     },
+    META_MERGE          => {
+        resources       => {
+            repository  => "https://github.com/maddingue/Net-Pcap",
+        },
+    },
     dist        => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" }, 
     clean       => { FILES => 'Net-Pcap-* macros.all' }, 
     %options,        # appropriate CCFLAGS, LDFLAGS and Define's
