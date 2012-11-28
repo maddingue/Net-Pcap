@@ -5,7 +5,7 @@ The revision history for Net-Pcap
     (unsafe) signals delivery.
   - [BUGFIX] Fix allocated size in pcap_open(), pcap_createsrcstr()
     and pcap_parsesrcstr(). 
-  - [API] Now make the C-like API available by default. Added the
+  - [API] Now made the C-like API available by default. Added the
     pcap_perl_settings() function and UNSAFE_SIGNALS pseudo-bloc.
   - [CODE] Replaced all occurrences of safemalloc() with Newx().
   - [CODE] Silenced some warnings.
