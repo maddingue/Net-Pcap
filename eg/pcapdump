@@ -129,7 +129,7 @@ sub process_packet {
         }
         elsif ($ipframe->{proto} == IP_PROTO_UDP) {
             my $udpframe = NetPacket::UDP->decode($ipframe->{data});
-            $proto     = "TCP";
+            $proto     = "UDP";
             $src_port  = $udpframe->{src_port};
             $dest_port = $udpframe->{dest_port};
             $payload   = $udpframe->{data};

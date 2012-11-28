@@ -1,5 +1,8 @@
 The revision history for Net-Pcap
 
+  - [BUGFIX] CPAN-RT#55163: Typo in eg/pcapdump (Iain Arnell and
+    Jose Pedro Oliveira).
+
 2012.11.28 - 0.17 - Sebastien Aperghis-Tramoni (SAPER)
   - [BUGFIX] CPAN-RT#43308: Net::Pcap no longer enables immediate
     (unsafe) signals delivery.
