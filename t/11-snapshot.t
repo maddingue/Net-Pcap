@@ -36,7 +36,7 @@ $dev = find_network_device();
 
 for my $size (@sizes) {
     # Open the device
-    $pcap = Net::Pcap::open_live($dev, $size, 1, 0, \$err);
+    $pcap = Net::Pcap::open_live($dev, $size, 1, 100, \$err);
 
     # Testing snapshot()
     $snapshot = 0;

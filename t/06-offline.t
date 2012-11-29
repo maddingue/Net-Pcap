@@ -17,7 +17,7 @@ my($dev,$pcap,$dumper,$dump_file,$err) = ('','','','');
 
 # Find a device and open it
 $dev = find_network_device();
-$pcap = Net::Pcap::open_live($dev, 1024, 1, 0, \$err);
+$pcap = Net::Pcap::open_live($dev, 1024, 1, 100, \$err);
 
 # Testing error messages
 SKIP: {

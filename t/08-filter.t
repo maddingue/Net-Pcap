@@ -50,7 +50,7 @@ SKIP: {
     skip "no network device available", 22 unless find_network_device();
 
     # Open the device
-    $pcap = Net::Pcap::open_live($dev, 1024, 1, 0, \$err);
+    $pcap = Net::Pcap::open_live($dev, 1024, 1, 100, \$err);
 
     # Testing error messages
     SKIP: {

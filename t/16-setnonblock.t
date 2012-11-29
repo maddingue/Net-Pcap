@@ -47,7 +47,7 @@ SKIP: {
 
     # Find a device and open it
     $dev = find_network_device();
-    $pcap = Net::Pcap::open_live($dev, 1024, 1, 0, \$err);
+    $pcap = Net::Pcap::open_live($dev, 1024, 1, 100, \$err);
     isa_ok( $pcap, 'pcap_tPtr', "\$pcap" );
 
     for my $state (0, 1) {
