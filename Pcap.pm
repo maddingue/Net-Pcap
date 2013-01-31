@@ -33,6 +33,7 @@ my @func_short_names = qw(
     lib_version  createsrcstr  parsesrcstr  open  setbuff  setuserbuffer
     setmode  setmintocopy  getevent  sendpacket
     sendqueue_alloc  sendqueue_queue  sendqueue_transmit
+    create set_buffer_size set_promisc set_snaplen set_timeout activate
 );
 
 my @func_long_names = map { "pcap_$_" } @func_short_names;
@@ -110,7 +111,8 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
             createsrcstr  parsesrcstr
             setbuff  setuserbuffer  setmode  setmintocopy  getevent  sendpacket
             sendqueue_alloc  sendqueue_queue  sendqueue_transmit
-        )], 
+            create set_buffer_size set_promisc set_snaplen set_timeout activate
+        )],
     );
 
     @EXPORT = (
@@ -467,6 +469,23 @@ B<Example>
 
     $pcap = pcap_open_dead(0, 1024);
 
+=item B<pcap_create($dev, \$err)>
+
+Creates and returns a new packet descriptor for looking at
+packets on the network. The C<$dev> parameter specifies which network interface
+to capture packets from.  The packet descriptor will be undefined if an error
+occurs, and the C<$err> parameter will be set with an appropriate error message.
+
+The packet descriptor returned is B<not yet activated>. It allows you to set
+various parameter (eg. using pcap_set_buffer_size) that cannot be set on some
+plateforms when activated. To actually start capturing packets, you must
+activate it using C<pcap_activate()>.
+
+B<Example>
+
+    $pcap = pcap_create($dev, \$err);
+    ...
+    pcap_activate($pcap);
 
 =item B<pcap_open_offline($filename, \$err)>
 
@@ -479,6 +498,18 @@ B<Example>
 
     $pcap = pcap_open_offline($dump, \$err)
         or die "Can't read '$dump': $err\n";
+
+
+=item B<pcap_activate($pcap)>
+
+Start capturing packets on a packet descriptor created with C<pcap_create()>
+and not yet activated. Return 0 on success.
+
+B<Example>
+
+    $pcap = pcap_create($dev, \$err);
+    ...
+    $pcap = pcap_activate($pcap);
 
 
 =item B<pcap_loop($pcap, $count, \&callback, $user_data)>
@@ -719,6 +750,39 @@ B<Example>
 Sets the data link type of the given pcap descriptor to the type specified 
 by C<$linktype>. Returns -1 on failure. 
 
+=item B<pcap_set_buffer_size($pcap, $dim)>
+
+Sets the ring buffer size used to capture packets on packet descriptor. Given
+size unit is bytes.
+
+Returns 0 on success.
+
+=item B<pcap_set_promisc($pcap, $promisc)>
+
+Sets the promisc mode to use with the interface associated to the packet
+descriptor. '0' to deactivate, any other values to activate.
+
+Only possible if the packet descriptor is B<not yet activated>.
+
+Returns 0 on success.
+
+=item B<pcap_set_snaplen($pcap, $snaplen)>
+
+Sets the snapshot length to use to capture packets with the given packet
+descriptor. Maximum value is 65535.
+
+Only possible if the packet descriptor is B<not yet activated>.
+
+Returns 0 on success.
+
+=item B<pcap_set_timeout($pcap, $timeout)>
+
+Sets the read timeout that will be used with the given packet descriptor to
+to_ms, which is in units of milliseconds.
+
+Only possible if the packet descriptor is B<not yet activated>.
+
+Returns 0 on success.
 
 =item B<pcap_datalink_name_to_val($name)>
 
