@@ -263,7 +263,7 @@ as of version 0.17, C<Net::Pcap> no longer modifies C<PL_signals> by
 itself, but provides facilities so the user has full control of how
 signals are delivered.
 
-First, the C<pcap_perl_settings()> function allows to select how
+First, the C<pcap_perl_settings()> function allows one to select how
 signals are handled:
 
     pcap_perl_settings(PERL_SIGNALS_UNSAFE);

@@ -2,6 +2,7 @@ The revision history for Net-Pcap
 
   - [BUGFIX] CPAN-RT#55163: Typo in eg/pcapdump (Iain Arnell and
     Jose Pedro Oliveira).
+  - [BUGFIX] CPAN-RT#83842: Typo in Net:Pcap (Xavier Guimard).
   - [TESTS] Added timeouts to prevent tests from hanging (Patrice Auffret).
 
 2012.11.28 - 0.17 - Sebastien Aperghis-Tramoni (SAPER)
