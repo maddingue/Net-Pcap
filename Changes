@@ -1,5 +1,6 @@
 The revision history for Net-Pcap
 
+  - [API] Added pcap_offline_filter (Martijn Lievaart)
   - [BUGFIX] CPAN-RT#55163: Typo in eg/pcapdump (Iain Arnell and
     Jose Pedro Oliveira).
   - [TESTS] Added timeouts to prevent tests from hanging (Patrice Auffret).

@@ -33,6 +33,7 @@ my @func_short_names = qw(
     lib_version  createsrcstr  parsesrcstr  open  setbuff  setuserbuffer
     setmode  setmintocopy  getevent  sendpacket
     sendqueue_alloc  sendqueue_queue  sendqueue_transmit
+    offline_filter
 );
 
 my @func_long_names = map { "pcap_$_" } @func_short_names;
@@ -110,6 +111,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
             createsrcstr  parsesrcstr
             setbuff  setuserbuffer  setmode  setmintocopy  getevent  sendpacket
             sendqueue_alloc  sendqueue_queue  sendqueue_transmit
+            offline_filter
         )], 
     );
 
@@ -204,7 +206,7 @@ __END__
 
 =head1 NAME
 
-Net::Pcap - Interface to the pcap(3) LBL packet capture library
+Net::Pcap - Interface to pcap(3) LBL packet capture library
 
 =head1 VERSION
 
@@ -263,7 +265,7 @@ as of version 0.17, C<Net::Pcap> no longer modifies C<PL_signals> by
 itself, but provides facilities so the user has full control of how
 signals are delivered.
 
-First, the C<pcap_perl_settings()> function allows to select how
+First, there C<pcap_perl_settings()> function allows to select how
 signals are handled:
 
     pcap_perl_settings(PERL_SIGNALS_UNSAFE);
@@ -618,6 +620,12 @@ error, but the error message is not available.
 
 Associate the compiled filter stored in C<$filter> with the packet
 capture descriptor C<$pcap>.
+
+
+=item B<pcap_offline_filter($filter, \%header, $packet)>
+
+Check whether C<$filter> matches the packet described by header C<%header> 
+and packet data C<$packet>. Returns true if the packet matches.
 
 
 =item B<pcap_freecode($filter)>
@@ -1207,19 +1215,15 @@ for examples on using this module.
 
 =head2 Perl Modules
 
-the L<NetPacket> or L<Net::Frame> modules to assemble and disassemble packets.
-
 L<Net::Pcap::Reassemble> for reassembly of TCP/IP fragments.
 
 L<POE::Component::Pcap> for using C<Net::Pcap> within POE-based programs.
-
-L<AnyEvent::Pcap> for using C<Net::Pcap> within AnyEvent-based programs.
 
 L<Net::Packet> or L<NetPacket> for decoding and creating network packets.
 
 L<Net::Pcap::Easy> is a module which provides an easier, more Perl-ish
 API than C<Net::Pcap> and integrates some facilities from L<Net::Netmask>
-and L<NetPacket>.
+and C<NetPacket>.
 
 =head2 Base Libraries
 
