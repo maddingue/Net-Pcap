@@ -49,14 +49,20 @@ extern "C" {
 
 typedef struct bpf_program  pcap_bpf_program_t;
 
+/* A struct for holding the user context and callback information*/
+typedef struct User_Callback {
+    SV *callback_fn;
+    SV *user;
+} User_Callback;
+
+
 /* Wrapper for callback function */
 
-SV *callback_fn;
-
 void callback_wrapper(u_char *user, const struct pcap_pkthdr *h, const u_char *pkt) {
-    SV *packet  = newSVpv((u_char *)pkt, h->caplen);
+    SV *packet  = newSVpvn((char *)pkt, h->caplen);
     HV *hdr     = newHV();
     SV *ref_hdr = newRV_inc((SV*)hdr);
+    User_Callback* user_callback = (User_Callback*) user;
 
     /* Fill the hash fields */
     hv_store(hdr, "tv_sec",  strlen("tv_sec"),  newSViv(h->ts.tv_sec),  0);
@@ -67,13 +73,13 @@ void callback_wrapper(u_char *user, const struct pcap_pkthdr *h, const u_char *p
     /* Push arguments onto stack */
     dSP;
     PUSHMARK(sp);
-    XPUSHs((SV*)user);
+    XPUSHs((SV*)user_callback->user);
     XPUSHs(ref_hdr);
     XPUSHs(packet);
     PUTBACK;
 
     /* Call perl function */
-    call_sv (callback_fn, G_DISCARD);
+    call_sv (user_callback->callback_fn, G_DISCARD);
 
     /* Decrement refcount to temp SVs */
     SvREFCNT_dec(packet);
@@ -389,16 +395,17 @@ pcap_dispatch(p, cnt, callback, user)
 	SV *user
 
 	CODE:
+    User_Callback user_callback;
     {
-		callback_fn = newSVsv(callback);
-		user = newSVsv(user);
+		user_callback.callback_fn = newSVsv(callback);
+		user_callback.user = newSVsv(user);
 
 		*(pcap_geterr(p)) = '\0';   /* reset error string */
 
-		RETVAL = pcap_dispatch(p, cnt, callback_wrapper, (u_char *)user);
+		RETVAL = pcap_dispatch(p, cnt, callback_wrapper, (u_char *)&user_callback);
 
-		SvREFCNT_dec(user);
-		SvREFCNT_dec(callback_fn);
+		SvREFCNT_dec(user_callback.user);
+		SvREFCNT_dec(user_callback.callback_fn);
     }	
 	OUTPUT:
 		RETVAL
@@ -412,14 +419,15 @@ pcap_loop(p, cnt, callback, user)
 	SV *user
 
 	CODE:
+    User_Callback user_callback;
     {
-		callback_fn = newSVsv(callback);
-		user = newSVsv(user);
+		user_callback.callback_fn = newSVsv(callback);
+		user_callback.user = newSVsv(user);
 
-		RETVAL = pcap_loop(p, cnt, callback_wrapper, (u_char *)user);
+		RETVAL = pcap_loop(p, cnt, callback_wrapper, (u_char *)&user_callback);
 
-		SvREFCNT_dec(user);
-		SvREFCNT_dec(callback_fn);
+		SvREFCNT_dec(user_callback.user);
+		SvREFCNT_dec(user_callback.callback_fn);
     }
 	OUTPUT:
 		RETVAL
@@ -486,7 +494,7 @@ pcap_next_ex(p, pkt_header, pkt_data)
                 hv_store(hv, "caplen",  strlen("caplen"),  newSVuv(header->caplen),     0);
                 hv_store(hv, "len",     strlen("len"),     newSVuv(header->len),        0);	
 
-                sv_setpvn((SV *)SvRV(pkt_data), data, header->caplen);
+                sv_setpvn((SV *)SvRV(pkt_data), (char *) data, header->caplen);
             }
 
         } else {

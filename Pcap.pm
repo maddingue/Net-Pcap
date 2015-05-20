@@ -1145,21 +1145,6 @@ which expect one or more of its arguments to be references.
 
 =back
 
-
-=head1 LIMITATIONS
-
-The following limitations apply to this version of C<Net::Pcap>.
-
-=over
-
-=item *
-
-At present, only one callback function and user data scalar can be
-current at any time as they are both stored in global variables.
-
-=back
-
-
 =head1 BUGS
 
 Please report any bugs or feature requests to
