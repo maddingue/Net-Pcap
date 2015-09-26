@@ -119,6 +119,7 @@ WriteMakefile(
     DISTNAME        => 'Net-Pcap',
     VERSION_FROM    => 'Pcap.pm',
     ABSTRACT_FROM   => 'Pcap.pm',
+    MIN_PERL_VERSION=> 5.6.1,
     PL_FILES        => {}, 
     EXE_FILES       => [ 'bin/pcapinfo' ], 
     PREREQ_PM       => {
