@@ -15,6 +15,7 @@
 #
 package Net::Pcap;
 use strict;
+use warnings;
 use Exporter ();
 use Carp;
 
