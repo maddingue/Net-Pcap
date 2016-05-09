@@ -6,11 +6,18 @@ The revision history for Net-Pcap
   - CPAN RT #55163: Typo in eg/pcapdump (Iain Arnell and Jose Pedro Oliveira).
   - CPAN RT #83842: Typo in Net:Pcap (Xavier Guimard).
 
+  [Code]
+  - use warnings (David Farrell).
+
   [Tests]
   - Added timeouts to prevent tests from hanging (Patrice Auffret).
+  - t/17-lib_version.t: adjust regexp to match Apple builds (David Farrell).
 
   [Distribution]
-  - Converted the Changes file to CPAN::Changes::Spec format
+  - Converted the Changes file to CPAN::Changes::Spec format.
+  - Makefile.PL: append CCFLAGS to $Config{ccflags} instead of overriding it.
+  - Makefile.PL: now dies when libpcap isn't found.
+  - Makefile.PL: declare minimum Perl version (David Farrell).
 
 
 0.17 - 2012-11-28 - Sebastien Aperghis-Tramoni (SAPER)
