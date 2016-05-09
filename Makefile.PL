@@ -39,7 +39,7 @@ for my $arg (@ARGV) {
 #      in recent version and is the only function that can be called 
 #      with no argument.
 if ($has_Win32) { # ActivePerl, Cygwin
-    warn <<"REASON" and exit unless have_library('wpcap', 'blank', 'pcap');
+    die <<"REASON" unless have_library('wpcap', 'blank', 'pcap');
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The WinPcap driver is not installed on this machine. \a
 
@@ -48,7 +48,7 @@ Please get and install the WinPcap driver and DLLs (auto-installer) from
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REASON
 
-    warn <<"REASON" unless have_library('wpcap', 'pcap_lib_version', 'pcap');
+    die <<"REASON" unless have_library('wpcap', 'pcap_lib_version', 'pcap');
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to lack the WinPcap developer pack. \a
 
@@ -64,7 +64,7 @@ Or get and install the WinPcap developer's pack from
 REASON
 
 } else { # other systems (Unix)
-    warn <<"REASON" and exit unless have_library('pcap');
+    die <<"REASON" unless have_library('pcap');
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to lack the pcap(3) library. \a
 
@@ -79,7 +79,7 @@ to compile this module.
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REASON
 
-    warn <<"REASON" unless have_library('pcap', 'pcap_lib_version');
+    die <<"REASON" unless have_library('pcap', 'pcap_lib_version');
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to have an old version of the pcap library. \a
 
