@@ -1271,11 +1271,11 @@ Peter Lister (PLISTER) E<lt>p.lister@cranfield.ac.ukE<gt>
 
 =head1 ACKNOWLEDGEMENTS
 
-To Paul Johnson for his module C<Devel::Cover> and his patience for 
-helping me using it with XS code, which revealed very useful for 
-writing more tests. 
+To Paul Johnson for his module L<Devel::Cover> and his patience for
+helping me using it with XS code, which revealed very useful for
+writing more tests.
 
-To the beta-testers: Jean-Louis Morel, Max Maischen, Philippe Bruhat, 
+To the beta-testers: Jean-Louis Morel, Max Maischen, Philippe Bruhat,
 David Morel, Scott Lanning, Rafael Garcia-Suarez, Karl Y. Pradene.
 
 
