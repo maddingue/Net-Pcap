@@ -6,10 +6,10 @@ use lib 't';
 use Utils;
 
 
-# first check than POE is available
+# first check that POE is available
 plan skip_all => "POE is not available" unless eval "use POE; 1";
 
-# then check than POE::Component::Pcap is available
+# then check that POE::Component::Pcap is available
 plan skip_all => "POE::Component::Pcap is not available"
     unless eval "use POE::Component::Pcap; 1";
 my $error = $@;
