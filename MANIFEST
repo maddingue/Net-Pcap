@@ -38,6 +38,8 @@ t/20-constants.t
 t/21-next_ex.t
 t/22-open.t
 t/23-srcstr.t
+t/50-anyevent-pcap.t
+t/50-net-pcap-easy.t
 t/50-poe-component-pcap.t
 t/distchk.t
 t/podcover.t
