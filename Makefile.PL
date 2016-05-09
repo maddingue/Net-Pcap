@@ -22,7 +22,7 @@ elsif ($^O eq 'cygwin') {
     cygwin_pcap_headers();
 }
 else {
-    $options{CCFLAGS} = "-Wall -Wwrite-strings"
+    $options{CCFLAGS} = "$Config{ccflags} -Wall -Wwrite-strings"
         if $Config{ccname} eq "gcc" and $] >= 5.006;
     $options{LIBS}    = '-lpcap';
 }
