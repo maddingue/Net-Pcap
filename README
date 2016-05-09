@@ -101,34 +101,10 @@ SUPPORT AND DOCUMENTATION
     examples/ subdirectory.
 
 
-HISTORY
-
-    The original version of Net::Pcap, version 0.01, was written by 
-    Peter Lister <p.lister@cranfield.ac.uk> using SWIG.
-
-    Version 0.02 was created by Bo Adler <thumper@alumni.caltech.edu> 
-    with a few bugfixes but not uploaded to CPAN.  It can be found at:
-        http://www.buttsoft.com/~thumper/software/perl/Net-Pcap/
-
-    Versions 0.03 and 0.04 were created by Tim Potter (TIMPOTTER) who 
-    entirely rewrote Net::Pcap using XS and wrote the documentation, 
-    with the help of David N. Blank-Edelman <dnb@ccs.neu.edu> for 
-    testing and general polishing.
-
-    Version 0.05 was released by Marco Carnut (KCARNUT) with fixes 
-    to make it work with Cygwin and WinPcap. 
-
-    Version 0.04.02 was independantly created by Jean-Louis Morel 
-    (JLMOREL) but not uploaded on the CPAN. It can be found here: 
-        http://www.bribes.org/perl/wnetpcap.html
-    Based on Tim Potter's version 0.04, it included fixes for WinPcap
-    and added wrappers for several new libpcap functions as well as 
-    WinPcap specific functions. 
-
-
 COPYRIGHT AND LICENCE
 
-    Copyright (C) 2005-2009 Sebastien Aperghis-Tramoni. All rights reserved.
+    Copyright (C) 2005-2016 Sebastien Aperghis-Tramoni and contributors.
+    All rights reserved.
     Copyright (C) 2003 Marco Carnut. All rights reserved. 
     Copyright (C) 1999-2000 Tim Potter. All rights reserved. 
     Copyright (C) 1998 Bo Adler. All rights reserved. 

@@ -203,6 +203,8 @@ sub findalldevs {
 
 __END__
 
+=encoding UTF-8
+
 =head1 NAME
 
 Net::Pcap - Interface to the pcap(3) LBL packet capture library
@@ -1242,31 +1244,61 @@ I<PerlMonks node about Net::Pcap>, L<http://perlmonks.org/?node_id=170648>
 
 =head1 AUTHORS
 
-Current maintainer is SE<eacute>bastien Aperghis-Tramoni (SAPER) 
-E<lt>sebastien@aperghis.netE<gt> with the help of Jean-Louis Morel (JLMOREL) 
-E<lt>jl_morel@bribes.orgE<gt> for WinPcap support. 
+Current maintainer is Sébastien Aperghis-Tramoni (SAPER) with the help
+of Tim Wilde (TWILDE).
 
-Previous authors & maintainers: 
+Complete list of authors & contributors:
 
 =over
 
-=item *
+=item * Bo Adler (BOADLER) E<lt>thumper (at) alumni.caltech.eduE<gt>
 
-Marco Carnut (KCARNUT) E<lt>kiko@tempest.com.brE<gt>
+=item * Craig Davison
 
-=item *
+=item * David Farrell
 
-Tim Potter (TIMPOTTER) E<lt>tpot@frungy.orgE<gt>
+=item * David N. Blank-Edelman E<lt>dnb (at) ccs.neu.eduE<gt>
 
-=item *
+=item * Jean-Louis Morel (JLMOREL) E<lt>jl_morel (at) bribes.orgE<gt>
 
-Bo Adler (BOADLER) E<lt>thumper@alumni.caltech.eduE<gt>
+=item * Marco Carnut (KCARNUT) E<lt>kiko (at) tempest.com.brE<gt>
 
-=item *
+=item * Patrice Auffret (GOMOR)
 
-Peter Lister (PLISTER) E<lt>p.lister@cranfield.ac.ukE<gt>
+=item * Peter Lister (PLISTER) E<lt>p.lister (at) cranfield.ac.ukE<gt>
+
+=item * Rafaël Garcia-Suarez (RGARCIA)
+
+=item * Sébastien Aperghis-Tramoni (SAPER) E<lt>sebastien (at) aperghis.netE<gt>
+
+=item * Tim Potter (TIMPOTTER) E<lt>tpot (at) frungy.orgE<gt>
 
 =back
+
+
+=head1 HISTORY
+
+The original version of C<Net::Pcap>, version 0.01, was written by
+Peter Lister using SWIG.
+
+Version 0.02 was created by Bo Adler with a few bugfixes but not
+uploaded to CPAN. It could be found at:
+L<http://www.buttsoft.com/~thumper/software/perl/Net-Pcap/>
+
+Versions 0.03 and 0.04 were created by Tim Potter who entirely
+rewrote C<Net::Pcap> using XS and wrote the documentation, with
+the help of David N. Blank-Edelman for testing and general polishing.
+
+Version 0.05 was released by Marco Carnut with fixes to make it
+work with Cygwin and WinPcap.
+
+Version 0.04.02 was independantly created by Jean-Louis Morel
+but not uploaded on the CPAN. It can be found here:
+L<http://www.bribes.org/perl/wnetpcap.html>
+
+Based on Tim Potter's version 0.04, it included fixes for WinPcap
+and added wrappers for several new libpcap functions as well as
+WinPcap specific functions.
 
 
 =head1 ACKNOWLEDGEMENTS
@@ -1281,7 +1313,7 @@ David Morel, Scott Lanning, Rafael Garcia-Suarez, Karl Y. Pradene.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright (C) 2005, 2006, 2007, 2008, 2009 SE<eacute>bastien Aperghis-Tramoni.
+Copyright (C) 2005-2016 Sébastien Aperghis-Tramoni and contributors.
 All rights reserved. 
 
 Copyright (C) 2003 Marco Carnut. All rights reserved. 

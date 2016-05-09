@@ -9,6 +9,11 @@ The revision history for Net-Pcap
   [Code]
   - use warnings (David Farrell).
 
+  [Documentation]
+  - Moved HISTORY from README to main documentation.
+  - Rewrote AUTHORS to acknowledge all contributors.
+  - Updated copyright years.
+
   [Tests]
   - Added timeouts to prevent tests from hanging (Patrice Auffret).
   - t/17-lib_version.t: adjust regexp to match Apple builds (David Farrell).
