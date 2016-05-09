@@ -10,9 +10,10 @@ use Utils;
 plan skip_all => "POE is not available" unless eval "use POE; 1";
 
 # then check that POE::Component::Pcap is available
-plan skip_all => "POE::Component::Pcap is not available"
-    unless eval "use POE::Component::Pcap; 1";
+eval "use POE::Component::Pcap";
 my $error = $@;
+plan skip_all => "POE::Component::Pcap is not available"
+    if $error =~ /^Can't locate/;
 
 plan tests => 18;
 is( $error, '', "use POE::Component::Pcap" );
