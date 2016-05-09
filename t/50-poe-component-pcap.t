@@ -24,7 +24,7 @@ SKIP: {
     skip "must be run as root", 17 unless is_allowed_to_use_pcap();
     skip "no network device available", 17 unless $dev;
 
-    #diag "[POE] create";
+    note "[POE] create";
     POE::Session->create(
         inline_states => {
             _start      => \&start,
@@ -33,13 +33,15 @@ SKIP: {
         },
     );
 
-    #diag "[POE] run";
+    note "[POE] run";
     POE::Kernel->run;
 }
 
 
 sub start {
-    #diag "[POE:start] spawning new Pcap session ", $_[&SESSION]->ID, " on device $dev";
+    note "[POE:start] spawning new Pcap session ", $_[&SESSION]->ID,
+        " on device $dev";
+
     POE::Component::Pcap->spawn(
         Alias => 'pcap',  Device => $dev,
         Dispatch => 'got_packet',  Session => $_[&SESSION],
@@ -50,12 +52,12 @@ sub start {
 }
 
 sub stop {
-    #diag "[POE:stop]";
+    note "[POE:stop]";
     $_[&KERNEL]->post(pcap => 'shutdown');
 }
 
 sub got_packet {
-    #diag "[POE:got_packet]";
+    note "[POE:got_packet]";
     my $packets = $_[&ARG0];
 
     # process the first packet only
@@ -66,7 +68,7 @@ sub got_packet {
 }
 
 sub process_packet {
-    #diag "[POE:process_packet]";
+    note "[POE:process_packet]";
     my ($header, $packet) = @_;
 
     ok( defined $header,        " - header is defined" );
