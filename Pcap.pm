@@ -25,7 +25,7 @@ my @func_short_names = qw(
     lookupdev  findalldevs  lookupnet
     open_live  open_dead  open_offline  loop  breakloop  close  dispatch
     next  next_ex  compile  compile_nopcap  setfilter  freecode
-    setnonblock  getnonblock
+    offline_filter  setnonblock  getnonblock
     dump_open  dump  dump_file  dump_flush  dump_close
     datalink  set_datalink  datalink_name_to_val  datalink_val_to_name
     datalink_val_to_description
@@ -102,6 +102,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
             open_live  open_dead  open_offline
             dump_open  dump_close  dump_file  dump_flush
             compile  compile_nopcap  setfilter  freecode
+            offline_filter  setnonblock  getnonblock
             dispatch  next_ex  loop  breakloop
             datalink  set_datalink  datalink_name_to_val  
             datalink_val_to_name  datalink_val_to_description
@@ -627,6 +628,12 @@ capture descriptor C<$pcap>.
 
 Used to free the allocated memory used by a compiled filter, as created 
 by C<pcap_compile()>. 
+
+
+=item B<pcap_offline_filter($filter, \%header, $packet)>
+
+Check whether C<$filter> matches the packet described by header C<%header>
+and packet data C<$packet>. Returns true if the packet matches.
 
 
 =item B<pcap_setnonblock($pcap, $mode, \$err)>

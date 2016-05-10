@@ -601,6 +601,56 @@ pcap_compile_nopcap(snaplen, linktype, fp, str, optimize, mask)
         RETVAL
 
 
+int
+pcap_offline_filter(fp, header, p)
+    pcap_bpf_program_t *fp
+    SV *header
+    SV *p
+
+    CODE:
+        /* Check that header is a hashref */
+        if (SvROK(header) && (SvTYPE(SvRV(header)) == SVt_PVHV)) {
+            struct pcap_pkthdr real_h;
+            char *real_p;
+            HV *hv;
+            SV **sv;
+
+            memset(&real_h, '\0', sizeof(real_h));
+
+            /* Copy from hash to pcap_pkthdr */
+            hv = (HV *)SvRV(header);
+
+            sv = hv_fetch(hv, "tv_sec", strlen("tv_sec"), 0);
+            if (sv != NULL) {
+                real_h.ts.tv_sec = SvIV(*sv);
+            }
+
+            sv = hv_fetch(hv, "tv_usec", strlen("tv_usec"), 0);
+            if (sv != NULL) {
+                real_h.ts.tv_usec = SvIV(*sv);
+            }
+
+            sv = hv_fetch(hv, "caplen", strlen("caplen"), 0);
+            if (sv != NULL) {
+                real_h.caplen = SvIV(*sv);
+            }
+
+            sv = hv_fetch(hv, "len", strlen("len"), 0);
+            if (sv != NULL) {
+                real_h.len = SvIV(*sv);
+            }
+
+            real_p = SvPV(p, PL_na);
+
+            RETVAL = pcap_offline_filter(fp, &real_h, (unsigned char *) real_p);
+
+        } else
+            croak("arg2 not a hash ref");
+
+    OUTPUT:
+        RETVAL
+
+
 int 
 pcap_setfilter(p, fp)
 	pcap_t *p

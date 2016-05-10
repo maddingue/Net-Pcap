@@ -11,7 +11,7 @@ my @func_short_names = qw(
     lookupdev  findalldevs  lookupnet
     open_live  open_dead  open_offline  loop  breakloop  close  dispatch
     next  next_ex  compile  compile_nopcap  setfilter  freecode
-    setnonblock  getnonblock
+    offline_filter  setnonblock  getnonblock
     dump_open  dump  dump_file  dump_flush  dump_close
     datalink  set_datalink  datalink_name_to_val  datalink_val_to_name
     datalink_val_to_description

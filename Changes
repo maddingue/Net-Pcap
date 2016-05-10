@@ -6,6 +6,9 @@ The revision history for Net-Pcap
   - CPAN RT #55163: Typo in eg/pcapdump (Iain Arnell and Jose Pedro Oliveira).
   - CPAN RT #83842: Typo in Net:Pcap (Xavier Guimard).
 
+  [API]
+  - Added pcap_offline_filter() (Martijn Lievaart).
+
   [Code]
   - use warnings (David Farrell).
 
