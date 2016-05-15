@@ -1251,6 +1251,8 @@ Complete list of authors & contributors:
 
 =item * David N. Blank-Edelman E<lt>dnb (at) ccs.neu.eduE<gt>
 
+=item * James Rouzier (ROUZIER)
+
 =item * Jean-Louis Morel (JLMOREL) E<lt>jl_morel (at) bribes.orgE<gt>
 
 =item * Marco Carnut (KCARNUT) E<lt>kiko (at) tempest.com.brE<gt>
@@ -1264,6 +1266,8 @@ Complete list of authors & contributors:
 =item * Sébastien Aperghis-Tramoni (SAPER) E<lt>sebastien (at) aperghis.netE<gt>
 
 =item * Tim Potter (TIMPOTTER) E<lt>tpot (at) frungy.orgE<gt>
+
+=item * Tim Wilde (TWILDE)
 
 =back
 
