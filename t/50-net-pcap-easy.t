@@ -6,6 +6,10 @@ use lib 't';
 use Utils;
 
 
+BEGIN {
+    *note = sub { print "# @_\n" } unless defined &note;
+}
+
 # check that Net::Pcap::Easy is available
 eval "use Net::Pcap::Easy";
 my $error = $@;

@@ -6,6 +6,10 @@ use lib 't';
 use Utils;
 
 
+BEGIN {
+    *note = sub { print "# @_\n" } unless defined &note;
+}
+
 # first check that POE is available
 plan skip_all => "POE is not available" unless eval "use POE; 1";
 

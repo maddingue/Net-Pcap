@@ -25,6 +25,7 @@ The revision history for Net-Pcap
   - t/50-poe-component-pcap.t: small improvments.
   - Added t/50-net-pcap-easy.t to test with Net::Pcap::Easy.
   - Added t/50-anyevent-pcap.t to test with AnyEvent::Pcap.
+  - Make t/50-* pass with old versions of Test::More
 
   [Distribution]
   - Converted the Changes file to CPAN::Changes::Spec format.

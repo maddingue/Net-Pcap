@@ -6,6 +6,10 @@ use lib 't';
 use Utils;
 
 
+BEGIN {
+    *note = sub { print "# @_\n" } unless defined &note;
+}
+
 # first check that AnyEvent is available
 plan skip_all => "AnyEvent is not available" unless eval "use AnyEvent; 1";
 
