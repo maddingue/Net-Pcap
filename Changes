@@ -1,6 +1,6 @@
 The revision history for Net-Pcap
 
-(next)
+0.18 - 2016-05-15 - Sebastien Aperghis-Tramoni (SAPER)
 
   [Bugfixes]
   - CPAN RT #77807: Net::Pcap is no longer limited to one callback function,
