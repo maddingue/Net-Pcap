@@ -30,7 +30,7 @@ SKIP: {
 
     throws_ok(sub {
         Net::Pcap::createsrcstr(\$src, 0, 0, 0, 0, 0)
-    }, '/^arg6 not a hash ref/', 
+    }, '/^arg6 not a .*/', 
        "calling createsrcstr() with incorrect argument type for arg6");
 
     # parsesrcstr() errors
@@ -66,13 +66,13 @@ SKIP: {
 
 }
 
-$r = eval { createsrcstr(\$src, $type, $host, $port, $name, \$err) };
-is( $@, '', "createsrcstr() " );
+$r = eval { Net::Pcap::createsrcstr(\$src, $type, $host, $port, $name, \$err) };
+is( $@, '', "createsrcstr()" );
 is( $r, 0, " - should return zero: $r" );
 is( $src, "$type\://$host\:$port/$name", " - checking created source string" );
 
 my($parsed_type,$parsed_host,$parsed_port,$parsed_name) = ('','','','');
-$r = eval { parsesrcstr($src, \$parsed_type, \$parsed_host, \$parsed_port, \$parsed_name, \$err) };
+$r = eval { Net::Pcap::parsesrcstr($src, \$parsed_type, \$parsed_host, \$parsed_port, \$parsed_name, \$err) };
 is( $@, '', "parsesrcstr() " );
 is( $r, 0, " - should return zero: $r" );
 is( $parsed_type, $type, " - checking parsed type" );

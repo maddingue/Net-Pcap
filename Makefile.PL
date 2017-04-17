@@ -4,6 +4,7 @@ use Cwd;
 use ExtUtils::MakeMaker;
 eval "use ExtUtils::MakeMaker::Coverage";
 use File::Spec;
+use File::Basename;
 
 
 my ($DEBUG, %options, $DEVNULL, $is_Win32, $has_Win32);
@@ -33,10 +34,10 @@ for my $arg (@ARGV) {
 }
 
 
-# The detection logic is: 
-#   1. first try to check if the pcap library is available; 
-#   2. then try to use the pcap_lib_version() function which is present 
-#      in recent version and is the only function that can be called 
+# The detection logic is:
+#   1. first try to check if the pcap library is available;
+#   2. then try to use the pcap_lib_version() function which is present
+#      in recent version and is the only function that can be called
 #      with no argument.
 if ($has_Win32) { # ActivePerl, Cygwin
     die <<"REASON" unless have_library('wpcap', 'blank', 'pcap');
@@ -52,9 +53,9 @@ REASON
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to lack the WinPcap developer pack. \a
 
-If it is installed in a non-standard location, please try setting the LIBS 
-and INC values on the command line.  For instance, if you have unziped the 
-developer's pack in C:\\WpdPack, you should execute: 
+If it is installed in a non-standard location, please try setting the LIBS
+and INC values on the command line.  For instance, if you have unziped the
+developer's pack in C:\\WpdPack, you should execute:
 
     perl Makefile.PL INC=-IC:/WpdPack/Include "LIBS=-LC:/WpdPack/Lib -lwpcap"
 
@@ -68,14 +69,14 @@ REASON
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to lack the pcap(3) library. \a
 
-If it is installed in a non-standard location, please try setting the LIBS 
+If it is installed in a non-standard location, please try setting the LIBS
 and INC values on the command line.
 
 Or get the sources and install the pcap library from http://www.tcpdump.org/
 
-If you install the pcap library using a system package, make sure to also 
-install the corresponding -devel package, which contains the C headers needed 
-to compile this module. 
+If you install the pcap library using a system package, make sure to also
+install the corresponding -devel package, which contains the C headers needed
+to compile this module.
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REASON
 
@@ -83,28 +84,31 @@ REASON
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 You appear to have an old version of the pcap library. \a
 
-This module need a recent version of the pcap library in order to provide 
-access to all its features. You can still compile it with your old pcap 
-library but some functions won't be available, and trying to use them in 
-Perl programs will generate errors. Programs only using the old functions 
-should perform as previously. If not, don't hesitate to fill a bug. 
+This module need a recent version of the pcap library in order to provide
+access to all its features. You can still compile it with your old pcap
+library but some functions won't be available, and trying to use them in
+Perl programs will generate errors. Programs only using the old functions
+should perform as previously. If not, don't hesitate to fill a bug.
 
 You can get the latest sources of the pcap library at http://www.tcpdump.org/
 
-If you install the pcap library using a system package, make sure to also 
-install the corresponding -devel package, which contains the C headers needed 
-to compile this module. 
+If you install the pcap library using a system package, make sure to also
+install the corresponding -devel package, which contains the C headers needed
+to compile this module.
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REASON
 }
 
-# Now trying to detect which functions are actually available. 
-# We have to do this because the pcap library still doesn't have any macro 
-# to identify its API version and the pcap_lib_version() is only available 
-# since version 0.8 or so. Therefore we add defines in order to replace 
-# missing functions with croaking stubs. 
-# We also store the list of available functions in a file for skipping the 
-# corresponding tests. 
+# Now trying to detect which functions are actually available.
+# We have to do this because the pcap library still doesn't have any macro
+# to identify its API version and the pcap_lib_version() is only available
+# since version 0.8 or so. Therefore we add defines in order to replace
+# missing functions with croaking stubs.
+# We also store the list of available functions in a file for skipping the
+# corresponding tests.
+my $sanity_check = have_functions('pcap_open_live');
+die "Couldn't find pcap_open_live(). Something is very wrong."
+    unless $sanity_check;
 my @funcs = have_functions(find_functions());
 $options{DEFINE} .= cpp_defines(@funcs);
 open(FUNCS, '>funcs.txt') or warn "warning: can't write 'funcs.txt': $!\n";
@@ -120,8 +124,8 @@ WriteMakefile(
     VERSION_FROM    => 'Pcap.pm',
     ABSTRACT_FROM   => 'Pcap.pm',
     MIN_PERL_VERSION=> 5.6.1,
-    PL_FILES        => {}, 
-    EXE_FILES       => [ 'bin/pcapinfo' ], 
+    PL_FILES        => {},
+    EXE_FILES       => [ 'bin/pcapinfo' ],
     PREREQ_PM       => {
         # module prereqs
         'Carp'          => '0',
@@ -139,8 +143,8 @@ WriteMakefile(
             repository  => "https://github.com/maddingue/Net-Pcap",
         },
     },
-    dist        => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" }, 
-    clean       => { FILES => 'Net-Pcap-* macros.all' }, 
+    dist        => { 'COMPRESS' => "gzip -9f", 'SUFFIX'   => "gz" },
+    clean       => { FILES => 'Net-Pcap-* macros.all' },
     %options,        # appropriate CCFLAGS, LDFLAGS and Define's
 );
 
@@ -175,9 +179,9 @@ if (eval { require ExtUtils::Constant; 1 }) {
         DLT_USER13 DLT_USER14 DLT_USER15 DLT_USER2 DLT_USER3 DLT_USER4
         DLT_USER5 DLT_USER6 DLT_USER7 DLT_USER8 DLT_USER9 MODE_CAPT
         MODE_MON MODE_STAT PCAP_ERRBUF_SIZE PCAP_IF_LOOPBACK
-        PCAP_VERSION_MAJOR PCAP_VERSION_MINOR OPENFLAG_PROMISCUOUS 
+        PCAP_VERSION_MAJOR PCAP_VERSION_MINOR OPENFLAG_PROMISCUOUS
         OPENFLAG_DATATX_UDP OPENFLAG_NOCAPTURE_RPCAP RMTAUTH_NULL RMTAUTH_PWD
-        PCAP_SAMP_NOSAMP PCAP_SAMP_FIRST_AFTER_N_MS PCAP_SAMP_1_EVERY_N 
+        PCAP_SAMP_NOSAMP PCAP_SAMP_FIRST_AFTER_N_MS PCAP_SAMP_1_EVERY_N
         PCAP_SRC_FILE PCAP_SRC_IFLOCAL PCAP_SRC_IFREMOTE
     ));
 
@@ -208,7 +212,7 @@ REASON
 }
 
 
-# The following function patches ActivePerl CORE/sys/socket.h 
+# The following function patches ActivePerl CORE/sys/socket.h
 sub win32_sys_socket_patch {
     my $sockfile;
 
@@ -230,13 +234,13 @@ IFDEF
             last
         }
     }
-  
+
     die "file 'socket.h' not found\n" unless $sockfile;
     open H, "<$sockfile" or die "can't read file '$sockfile': $!\n";
     my $h;
     { local $/; $h = <H>; }  # slurp file
     close H;
-  
+
     if ($h =~ /\#include <winsock2.h>/) {
         print "socket.h already patched... ok\n"
     } else {
@@ -275,8 +279,8 @@ sub cygwin_pcap_headers {
     }
 }
 
-# The rest of the code, up to the end of this file, has been copied 
-# from XML::LibXML::Common Makefile.PL, then modified in order to 
+# The rest of the code, up to the end of this file, has been copied
+# from XML::LibXML::Common Makefile.PL, then modified in order to
 # make all this detection stuff works under Win32
 
 ###################################################################
@@ -293,7 +297,7 @@ BEGIN {
     $has_Win32 = !$@;
     $is_Win32 = ($^O eq 'MSWin32');
     if ($is_Win32) {
-        $DEVNULL = 'DEVNULL';
+        $DEVNULL = 'NUL:';
     } else {
         $DEVNULL = eval { File::Spec->devnull };
         if ($@) { $DEVNULL = '/dev/null' }
@@ -388,7 +392,7 @@ sub try_link0 {
 
     my $cfile = gensym();
     $opt ||= '';
-    
+
     # local $options{LIBS};
     # $options{LIBS} .= $opt;
     unless (mkdir(".testlink", 0777)) {
@@ -537,13 +541,45 @@ sub have_functions {
     my @funcs = ();
     print "detecting available functions... ";
 
-    my @paths = DynaLoader::dl_findfile(qw(-lpcap));
-    my $libref = DynaLoader::dl_load_file($paths[0]);
+    my @paths = DynaLoader::dl_findfile(split /\s+/, $options{LIBS});
+    die "Couldn't find any library file satisfying '$options{LIBS}'"
+        unless @paths;
+    my $libfile = $paths[0];
 
+    # On Win32, we assume that the lib file will not be statically linked
+    # but will be a thin wrapper for a similarly named .dll file.
+    # This is not universal but works in many cases
+    # This assumes that a library -l$foo will map to lib$foo.a
+    # through DynaLoader. We then try to find and load $foo.dll in $ENV{PATH}
+    if ($has_Win32) {
+        (my $dll = basename $libfile) =~ s/\.\w+$//;
+        $dll =~ s/^lib//;
+        $dll .= '.dll';
+
+        ($libfile) = grep { -f } map { File::Spec->catfile($_,$dll) } File::Spec->path;
+        die "'$dll' not found in PATH"
+            unless $libfile;
+    };
+    warn "Using '$libfile' as potential symbol candidate";
+
+	# On 64bit Windows, generate our own .a and .def files, as they don't
+	# come with the WpdPack:
+	if( $has_Win32 and $Config{use64bitint}) {
+	    print "Generating wpcap.def file\n";
+		system( "gendef.exe - $libfile > wpcap.def" ) == 0
+		    or warn "Couldn't run gendef: $? / $!";
+		system("dlltool --as-flags=--64 -m i386:x86-64 -k --output-lib libwpcap.a --input-def wpcap.def");
+		print "libwpcap.a (re)generated. Please use it instead of the one in WpdPack.\n";
+	};
+
+    my $libref = DynaLoader::dl_load_file($libfile);
+    warn "Couldn't load $libfile via DynaLoader ($^E)"
+        unless $libref;
     for my $func (@_) {
         my $symref = DynaLoader::dl_find_symbol($libref, $func);
-        push @funcs, $func if defined $symref
-    }
+        push @funcs, $func if defined $symref;
+        #print "$func", $symref ? "" : " NOT", " found\n";
+    };
 
     print "ok\n";
     return @funcs

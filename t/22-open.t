@@ -43,19 +43,19 @@ SKIP: {
 
     throws_ok(sub {
         Net::Pcap::setbuff(0, 0)
-    }, '/^arg1 not a reference/', 
+    }, '/^p is not of type pcap_tPtr/', 
        "calling setbuff() with no argument");
 
     # setuserbuffer() errors
     throws_ok(sub {
-        Net::Pcap::userbuffer()
-    }, '/^Usage: Net::Pcap::setbuff\(p, size\)/', 
-       "calling userbuffer() with no argument");
+        Net::Pcap::setuserbuffer()
+    }, '/^Usage: Net::Pcap::setuserbuffer\(p, size\)/', 
+       "calling setuserbuffer() with no argument");
 
     throws_ok(sub {
-        Net::Pcap::userbuffer(0, 0)
-    }, '/^arg1 not a reference/', 
-       "calling userbuffer() with no argument");
+        Net::Pcap::setuserbuffer(0, 0)
+    }, '/^p is not of type pcap_tPtr/', 
+       "calling setuserbuffer() with no argument");
 
     # setmode() errors
     throws_ok(sub {
@@ -65,7 +65,7 @@ SKIP: {
 
     throws_ok(sub {
         Net::Pcap::setmode(0, 0)
-    }, '/^arg1 not a reference/', 
+    }, '/^p is not of type pcap_tPtr/', 
        "calling setmode() with no argument");
 
     # setmintocopy() errors
@@ -76,7 +76,7 @@ SKIP: {
 
     throws_ok(sub {
         Net::Pcap::setmintocopy(0, 0)
-    }, '/^arg1 not a reference/', 
+    }, '/^p is not of type pcap_tPtr/', 
        "calling setmintocopy() with no argument");
 
 }

@@ -516,10 +516,13 @@ HANDLE pcap_getevent(pcap_t *p) {
 #ifdef _MSC_VER
 #pragma message( "Warning: the function pcap_setsampling() is not available" )
 #endif
+
+#ifndef HAVE_REMOTE
 struct pcap_samp {
     int method;
     int value;
 };
+#endif
 
 struct pcap_samp *pcap_setsampling(pcap_t *p);
 struct pcap_samp *pcap_setsampling(pcap_t *p) {
