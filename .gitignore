@@ -1,0 +1,16 @@
+Makefile
+Makefile.old
+*.tar.gz
+*.bak
+pm_to_blib
+blib/
+Net-Pcap-*
+Net-Pcap-*/
+.releaserc
+cover_db
+MYMETA.*
+*.bs
+*.def
+Pcap.c
+*.a
+*.o
