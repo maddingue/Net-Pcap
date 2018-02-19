@@ -294,6 +294,16 @@ pcap_open_dead(linktype, snaplen)
 
 
 pcap_t *
+pcap_open_dead_with_tstamp_precision(linktype, snaplen, precision)
+    int linktype
+    int snaplen
+    u_int precision
+
+    OUTPUT:
+        RETVAL
+
+
+pcap_t *
 pcap_open_offline(fname, err)
 	const char *fname
 	SV *err
@@ -316,6 +326,35 @@ pcap_open_offline(fname, err)
 
 		} else
 			croak("arg2 not a reference");	
+
+	OUTPUT:
+		err
+		RETVAL
+
+pcap_t *
+pcap_open_offline_with_tstamp_precision(fname, precision, err)
+        const char *fname
+        u_int precision
+        SV *err
+
+	CODE:
+		if (SvROK(err)) {
+            char    *errbuf = NULL;
+            SV      *err_sv = SvRV(err);
+
+            Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
+			RETVAL = pcap_open_offline_with_tstamp_precision(fname, precision, errbuf);
+
+			if (RETVAL == NULL) {
+				sv_setpv(err_sv, errbuf);
+			} else {
+				err_sv = &PL_sv_undef;
+			}
+
+			safefree(errbuf);
+
+		} else
+			croak("arg3 not a reference");	
 
 	OUTPUT:
 		err
@@ -1126,4 +1165,3 @@ pcap_sendqueue_transmit(p, queue, sync)
     pcap_t *p
     pcap_send_queue * queue
     int sync
-

@@ -58,7 +58,6 @@
 #endif
 #endif
 
-
 /* Stubs for functions not available in libpcap */
 #define FUNCTION_NOT_IMPLEMENTED_ERROR(func)  croak(\
         "The function " #func "() is not available in your release of the pcap library.");
@@ -528,6 +527,35 @@ struct pcap_samp *pcap_setsampling(pcap_t *p) {
 }
 #endif
 
+#ifndef PCAP_TSTAMP_PRECISION_NANO
+#ifdef __GNUC__
+#warning "the function pcap_open_dead_with_tstamp_precision() is not available"
+#warning "the function pcap_open_offline_with_tstamp_precision() is not available"
+#endif
+#ifdef _MSC_VER
+#pragma message( "Warning: the function pcap_open_dead_with_tstamp_precision() is not available" )
+#pragma message( "Warning: the function pcap_open_offline_with_tstamp_precision() is not available" )
+#endif
+
+pcap_t *pcap_open_dead_with_tstamp_precision(int linktype, int snaplen, u_int precision)
+{
+    FUNCTION_NOT_IMPLEMENTED_ERROR(pcap_open_dead_with_tstamp_precision)
+    return NULL;
+}
+
+pcap_t *pcap_open_offline_with_tstamp_precision(const char *fname, u_int precision, char *err)
+{
+    FUNCTION_NOT_IMPLEMENTED_ERROR(pcap_open_offline_with_tstamp_precision)
+    return NULL;
+}
+
+#ifndef PCAP_TSTAMP_PRECISION_MICRO
+#define PCAP_TSTAMP_PRECISION_MICRO 0
+#endif
+#ifndef PCAP_TSTAMP_PRECISION_NANO
+#define PCAP_TSTAMP_PRECISION_NANO 1
+#endif
+#endif
 
 /*
 
