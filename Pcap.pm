@@ -113,6 +113,9 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
             setbuff  setuserbuffer  setmode  setmintocopy  getevent  sendpacket
             sendqueue_alloc  sendqueue_queue  sendqueue_transmit
         )], 
+        precision => [qw(
+            PCAP_TSTAMP_PRECISION_NANO PCAP_TSTAMP_PRECISION_MICRO
+        )], 
     );
 
     @EXPORT = (
@@ -126,6 +129,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
         @{$EXPORT_TAGS{functions}}, 
         @{$EXPORT_TAGS{mode}}, 
         @{$EXPORT_TAGS{openflag}}, 
+        @{$EXPORT_TAGS{precision}}, 
         @{$EXPORT_TAGS{bpf}}, 
     );
 
@@ -355,6 +359,12 @@ C<:sample> exports the following constants:
 C<:rpcap> exports the following constants:
 
     RMTAUTH_NULL  RMTAUTH_PWD
+
+=item *
+
+C<:precision> exports the following constants:
+
+    PCAP_TSTAMP_PRECISION_NANO  PCAP_TSTAMP_PRECISION_MICRO
 
 =item *
 
