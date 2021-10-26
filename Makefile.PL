@@ -119,13 +119,13 @@ my $pcap_version_number = $1 || '1.8'; # a guess
 
 # Expand the numbers with leading zeroes for easy stringy comparison
 $pcap_version_number =~ s!(\d+)!sprintf '%03d', $1!ge;
+$pcap_version_number =~ s!\.!!g;
 
-$options{DEFINE} .= cpp_defines(@funcs);
-
-if( $pcap_version_number > '001.009' ) {
+if( $pcap_version_number > 1009000 ) {
     $options{DEFINE} .= ' -DHAVE_PCAP_SETSAMPLING';
 }
 
+$options{DEFINE} .= cpp_defines(@funcs);
 open(FUNCS, '>funcs.txt') or warn "warning: can't write 'funcs.txt': $!\n";
 print FUNCS join("\n", @funcs), "\n";
 close(FUNCS);
@@ -570,6 +570,25 @@ sub have_functions {
 
 sub cpp_defines {
     return join '', sort map { " -DHAVE_\U$_" } @_
+}
+
+sub get_pcap_version {
+    print "detecting libpcap version... ";
+
+    use Config;
+
+    my $cc = "$Config{cc} $options{CCFLAGS} $options{LDFLAGS} 'pcap_version.c' $options{LIBS} -o pcap_version.exe";
+    print "Running [$cc]\n";
+    system($cc) == 0
+        or return undef;
+
+    my $res = `./pcap_version.exe`;
+    if( $res ) {
+        $res =~ s!\s+$!!;
+    };
+    print "ok ($res)\n";
+
+    return $res
 }
 
 
