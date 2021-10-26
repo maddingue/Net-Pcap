@@ -122,6 +122,7 @@ $pcap_version_number =~ s!(\d+)!sprintf '%03d', $1!ge;
 $pcap_version_number =~ s!\.!!g;
 
 if( $pcap_version_number > 1009000 ) {
+    # 1.9.0 adds pcap_setsampling()
     $options{DEFINE} .= ' -DHAVE_PCAP_SETSAMPLING';
 }
 
