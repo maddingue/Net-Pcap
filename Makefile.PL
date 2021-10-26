@@ -106,7 +106,6 @@ REASON
 # We also store the list of available functions in a file for skipping the
 # corresponding tests.
 my @funcs = have_functions(find_functions());
-#$options{DEFINE} .= cpp_defines(@funcs) . " -DHAVE_PCAP_SETSAMPLING";
 
 # Get the version of the pcap library, hoping that we have a libpcap
 # more recent than 0.8:
