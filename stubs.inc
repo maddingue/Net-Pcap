@@ -354,11 +354,6 @@ int pcap_parsesrcstr(const char *source, int *type, char *host, char *port, char
 #ifdef _MSC_VER
 #pragma message( "Warning: the function pcap_open() is not available" )
 #endif
-struct pcap_rmtauth {
-    int type;
-    char *username;
-    char *password;
-};
 
 pcap_t * pcap_open(const char *source, int snaplen, int flags, int read_timeout, struct pcap_rmtauth *auth, char *err);
 pcap_t * pcap_open(const char *source, int snaplen, int flags, int read_timeout, struct pcap_rmtauth *auth, char *err) {
@@ -516,6 +511,7 @@ HANDLE pcap_getevent(pcap_t *p) {
 #ifdef _MSC_VER
 #pragma message( "Warning: the function pcap_setsampling() is not available" )
 #endif
+#if 0
 struct pcap_samp {
     int method;
     int value;
@@ -526,6 +522,7 @@ struct pcap_samp *pcap_setsampling(pcap_t *p) {
     FUNCTION_NOT_IMPLEMENTED_ERROR(pcap_setsampling)
     return NULL;
 }
+#endif
 #endif
 
 
