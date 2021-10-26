@@ -106,7 +106,7 @@ REASON
 # We also store the list of available functions in a file for skipping the 
 # corresponding tests. 
 my @funcs = have_functions(find_functions());
-$options{DEFINE} .= cpp_defines(@funcs);
+$options{DEFINE} .= cpp_defines(@funcs). "-DHAVE_PCAP_SETSAMPLING";
 open(FUNCS, '>funcs.txt') or warn "warning: can't write 'funcs.txt': $!\n";
 print FUNCS join("\n", @funcs), "\n";
 close(FUNCS);
