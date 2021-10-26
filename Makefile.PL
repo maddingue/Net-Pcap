@@ -115,7 +115,7 @@ $pcap_version //= get_pcap_version();
 
 $pcap_version =~ m!(\d+\.\S+)!
     or warn "Couldn't determine version number from [$pcap_version]";
-my $pcap_version_number = $1 || '1.8'; # a guess
+my $pcap_version_number = $1 || '1.8.0'; # a guess
 
 # Expand the numbers with leading zeroes for easy stringy comparison
 $pcap_version_number =~ s!(\d+)!sprintf '%03d', $1!ge;
