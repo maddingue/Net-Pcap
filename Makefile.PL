@@ -126,6 +126,13 @@ if( $pcap_version_number > 1009000 ) {
 }
 
 $options{DEFINE} .= cpp_defines(@funcs);
+
+# Since PCAP doesn't have a version define, we introduce one:
+(my $define = $pcap_version_number) =~ s!\.!!;
+$define =~ s!^0+!!;
+warn "<$define>";
+$options{DEFINE} .= " -DPERL_PCAP_VERSION=$define";
+
 open(FUNCS, '>funcs.txt') or warn "warning: can't write 'funcs.txt': $!\n";
 print FUNCS join("\n", @funcs), "\n";
 close(FUNCS);
