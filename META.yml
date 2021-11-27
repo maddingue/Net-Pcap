@@ -1,6 +1,6 @@
 ---
 name: Net-Pcap
-version: 0.12
+version: 0.19
 author:
   - 'Sébastien Aperghis-Tramoni <sebastien@aperghis.net>'
 abstract: Interface to pcap(3) LBL packet capture library
