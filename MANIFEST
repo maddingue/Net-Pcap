@@ -6,6 +6,7 @@ fallback/const-c.inc
 fallback/const-xs.inc
 Makefile.PL
 MANIFEST
+MANIFEST.SKIP
 META.json
 META.yml
 Pcap.pm
@@ -14,7 +15,6 @@ pcap_version.c
 ppport.h
 README
 stubs.inc
-stubs.inc.orig
 t/00-load.t
 t/01-api.t
 t/02-lookup.t
