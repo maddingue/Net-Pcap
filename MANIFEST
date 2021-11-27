@@ -6,6 +6,7 @@ fallback/const-c.inc
 fallback/const-xs.inc
 Makefile.PL
 MANIFEST
+META.json
 META.yml
 Pcap.pm
 Pcap.xs
