@@ -14,3 +14,8 @@ MYMETA.*
 Pcap.c
 *.a
 *.o
+const-c.inc
+const-xs.inc
+funcs.txt
+macros.all
+pcap_version.exe
