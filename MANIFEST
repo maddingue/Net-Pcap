@@ -1,3 +1,4 @@
+.gitignore
 bin/pcapinfo
 Changes
 eg/pcapdump
