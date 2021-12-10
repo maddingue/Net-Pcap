@@ -1127,3 +1127,59 @@ pcap_sendqueue_transmit(p, queue, sync)
     pcap_send_queue * queue
     int sync
 
+
+pcap_t *
+pcap_create(source, err)
+    char *source
+    SV *err
+
+    CODE:
+        if (!SvROK(err))
+            croak("arg2 not a reference");
+
+	char    *errbuf = NULL;
+	SV      *err_sv = SvRV(err);
+
+	Newx(errbuf, PCAP_ERRBUF_SIZE+1, char);
+
+	RETVAL = pcap_create(source, errbuf); 
+
+	if (RETVAL == NULL) {
+	    sv_setpv(err_sv, errbuf);				
+	} else {
+	    err_sv = &PL_sv_undef;
+	}  	  
+
+	safefree(errbuf);
+
+    OUTPUT:
+        RETVAL
+        err
+
+
+int
+pcap_set_buffer_size(p, dim)
+    pcap_t *p
+    int dim
+
+
+int
+pcap_set_promisc(p, promisc)
+    pcap_t *p
+    int promisc
+
+
+int
+pcap_set_snaplen(p, snaplen)
+    pcap_t *p
+    int snaplen
+
+
+int
+pcap_set_timeout(p, timeout)
+    pcap_t *p
+    int timeout
+
+int
+pcap_activate(p)
+    pcap_t *p
