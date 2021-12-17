@@ -1,5 +1,10 @@
 The revision history for Net-Pcap
 
+0.20 - 2021-12-17 - Max Maischein (CORION)
+  [Bugfixes]
+  - CPAN RT #118727 Spelling fixes
+    Reported by Gregor Herrmann
+
 0.19 - 2021-11-27 - Max Maischein (CORION)
   [Bugfixes]
   - CPAN RT #127685 Restore compilation with libpcap 1.9+
