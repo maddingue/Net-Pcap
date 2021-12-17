@@ -255,7 +255,7 @@ security monitoring, network debugging, etc.
 
 Since version 5.7.3, Perl uses a mechanism called "deferred signals"
 to delay signals delivery until "safe" points in the interpreter. 
-See L<perlipc/"Deferred Signals (Safe Signals)"> for a detailled
+See L<perlipc/"Deferred Signals (Safe Signals)"> for a detailed
 explanation.
 
 Since C<Net::Pcap> version 0.08, released in October 2005, the module
@@ -1288,7 +1288,7 @@ the help of David N. Blank-Edelman for testing and general polishing.
 Version 0.05 was released by Marco Carnut with fixes to make it
 work with Cygwin and WinPcap.
 
-Version 0.04.02 was independantly created by Jean-Louis Morel
+Version 0.04.02 was independently created by Jean-Louis Morel
 but not uploaded on the CPAN. It can be found here:
 L<http://www.bribes.org/perl/wnetpcap.html>
 
