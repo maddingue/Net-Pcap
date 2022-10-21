@@ -34,7 +34,8 @@ jobs:
       run: |
         perl -v
 
-    - name: Install external dependencies
+    - name: Install external dependencies on Ubuntu
+      if:  ${{ startsWith( matrix.runner, 'ubuntu-')}}
       run: |
         sudo apt-get install libpcap-dev
 
