@@ -41,6 +41,16 @@ jobs:
         cpanm -v
         cpanm --installdeps --notest .
 
+    - name: Install Extra Modules for testing
+      run: |
+        cpanm --notest AnyEvent
+        cpanm --notest Net::Pcap::Easy
+        cpanm --notest POE
+        cpanm --notest Test::Distribution
+        cpanm --notest Test::Pod
+        cpanm --notest Test::Spelling
+        cpanm --notest Test::Portability::Files
+
     - name: Show Errors on Windows
       if:  ${{ failure() && startsWith( matrix.runner, 'windows-')}}
       run: |
@@ -59,9 +69,13 @@ jobs:
          cat  /Users/runner/.cpanm/work/*/build.log
 
     - name: Run tests
+      env:
+        AUTHOR_TESTS: 1
       run: |
         perl Makefile.PL
         make
         make test
 
-
+    - name: Run tests as root
+      run: |
+        sudo make test
