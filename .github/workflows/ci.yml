@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '42 5 * * *'
 
 jobs:
   test:
@@ -44,10 +46,13 @@ jobs:
     - name: Install Extra Modules for testing
       run: |
         cpanm --notest AnyEvent
+        cpanm --notest AnyEvent::Pcap
         cpanm --notest Net::Pcap::Easy
         cpanm --notest POE
+        cpanm --notest POE::Component::Pcap
         cpanm --notest Test::Distribution
         cpanm --notest Test::Pod
+        cpanm --notest Test::Pod::Coverage
         cpanm --notest Test::Spelling
         cpanm --notest Test::Portability::Files
 
@@ -74,8 +79,12 @@ jobs:
       run: |
         perl Makefile.PL
         make
+        mkdir -p releases # this is what is needed to trigger the podspell.t
         make test
 
     - name: Run tests as root
+      env:
+        AUTHOR_TESTS: 1
       run: |
         sudo make test
+
