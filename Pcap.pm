@@ -49,11 +49,9 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
 
 
 {
-    no strict "vars";
-    $VERSION = '0.20';
+    our $VERSION = '0.20';
 
-
-    %EXPORT_TAGS = (
+    our %EXPORT_TAGS = (
         'bpf' => [qw(
             BPF_ALIGNMENT  BPF_MAJOR_VERSION  BPF_MAXBUFSIZE  BPF_MAXINSNS
             BPF_MEMWORDS  BPF_MINBUFSIZE  BPF_MINOR_VERSION  BPF_RELEASE
@@ -114,14 +112,14 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
         )],
     );
 
-    @EXPORT = (
+    our @EXPORT = (
         @{$EXPORT_TAGS{pcap}},
         @{$EXPORT_TAGS{datalink}},
         @func_long_names,
         "UNSAFE_SIGNALS",
     );
 
-    @EXPORT_OK = (
+    our @EXPORT_OK = (
         @{$EXPORT_TAGS{functions}},
         @{$EXPORT_TAGS{mode}},
         @{$EXPORT_TAGS{openflag}},
@@ -134,7 +132,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
         1
     } or do {
         require DynaLoader;
-        push @ISA, 'DynaLoader';
+        push our @ISA, 'DynaLoader';
         bootstrap Net::Pcap $VERSION;
     };
 }
@@ -144,9 +142,8 @@ sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
     # XS function.
 
-    no strict "vars";
     my $constname;
-    ($constname = $AUTOLOAD) =~ s/.*:://;
+    ($constname = our $AUTOLOAD) =~ s/.*:://;
     return if $constname eq "DESTROY";
     croak "Net::Pcap::constant() not defined" if $constname eq 'constant';
     my ($error, $val) = constant($constname);

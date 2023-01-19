@@ -8,6 +8,9 @@ The revision history for Net-Pcap
     This is merely a cleanup of the C code probing for Pcap functionality,
     no need to upgrade.
 
+  [Code]
+  - use "our" for global variable declaration
+
   - Don't inherit from Exporter anymore
 
     This might break modules that rely on Net::Pcap isa Exporter, but that
