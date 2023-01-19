@@ -49,7 +49,7 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
 
 
 {
-    our $VERSION = '0.20';
+    our $VERSION = '0.21';
 
     our %EXPORT_TAGS = (
         'bpf' => [qw(
@@ -208,7 +208,7 @@ Net::Pcap - Interface to the pcap(3) LBL packet capture library
 
 =head1 VERSION
 
-Version 0.20
+Version 0.21
 
 =head1 SYNOPSIS
 
