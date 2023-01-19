@@ -16,7 +16,7 @@
 package Net::Pcap;
 use strict;
 use warnings;
-use Exporter ();
+use Exporter 'import';
 use Carp;
 
 
@@ -52,7 +52,6 @@ my @func_long_names = map { "pcap_$_" } @func_short_names;
     no strict "vars";
     $VERSION = '0.20';
 
-    @ISA = qw(Exporter);
 
     %EXPORT_TAGS = (
         'bpf' => [qw(
