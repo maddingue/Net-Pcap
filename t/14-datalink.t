@@ -26,6 +26,19 @@ plan skip_all => "extended datalink related functions are not available"
     DLT_SLIP()       => 'SLIP', 
     DLT_IEEE802_11() => 'IEEE802_11', 
 );
+
+# inspired by Makefile.PL
+my $pcap_version = Net::Pcap::lib_version();
+$pcap_version =~ m!(\d+\.\S+)!
+    or warn "Couldn't determine version number from [$pcap_version]";
+my $pcap_version_number = $1;
+$pcap_version_number =~ s!.*\s(\d+\.\S+)\s.*!$1!;
+$pcap_version_number =~ s!(\d+)!sprintf '%03d', $1!ge;
+$pcap_version_number =~ s!\.!!g;
+$pcap_version_number =~ s!^0+!!;
+diag "pcap_version_number: $pcap_version_number";
+
+if ($pcap_version_number lt 1011000) { # 1.11.0 introduced new constant descriptions
 %val2descr = (
     0                => 'BSD loopback', 
     DLT_NULL()       => 'BSD loopback', 
@@ -35,6 +48,17 @@ plan skip_all => "extended datalink related functions are not available"
     DLT_SLIP()       => 'SLIP', 
     DLT_IEEE802_11() => '802.11', 
 );
+} else {
+%val2descr = (
+    0                => 'BSD loopback',
+    DLT_NULL()       => 'BSD loopback',
+    DLT_LTALK()      => 'LocalTalk',
+    DLT_RAW()        => 'Raw IPv4/IPv6',
+    DLT_PPP_SERIAL() => 'Point-to-Point Protocol over serial',
+    DLT_SLIP()       => 'Serial Line IP',
+    DLT_IEEE802_11() => '802.11',
+);
+}
 
 plan tests => keys(%name2val) * 2 + keys(%val2name) * 2 + keys(%val2descr) * 2 + 23;
 
